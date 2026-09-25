@@ -3,394 +3,953 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LLAVE — Powered by GL Tax Solutions</title>
+<meta name="description" content="LLAVE by GL Tax Solutions: prepara a los compradores que todavía no califican y los regresa listos al Realtor.">
+<title>LLAVE by GL Tax</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0A0E13; --bg2:#0D131A; --surface:#131A22; --surface2:#1A232D;
-  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
-  --gold:#E8B94D; --gold2:#F6D67F; --teal:#33E2B4; --teal-dim:rgba(51,226,180,.14);
-  --amber:#E09A4E; --text:#F3F6F8; --muted:#8E9BA8; --muted2:#57646F;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); box-sizing:border-box;
+  color-scheme:dark;
+  --bg:#090C13; --bg2:#0E121C; --surface:#131927; --surface2:#1A2133; --surface3:#222B40;
+  --line:rgba(170,190,240,.10); --line2:rgba(170,190,240,.18);
+  --text:#EEF1F7; --muted:#9AA3B6; --dim:#626C83;
+  --brass:#F2B544; --brass2:#FFD27A; --brass-ink:#241700; --brass-soft:rgba(242,181,68,.13);
+  --ready:#4FE0A0; --ready-soft:rgba(79,224,160,.13);
+  --warn:#F5A04B; --warn-soft:rgba(245,160,75,.13);
+  --sky:#86A8FF; --sky-soft:rgba(134,168,255,.13);
+  --display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --body:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-*{box-sizing:border-box;}
-html{scroll-padding-top:env(safe-area-inset-top,0px);}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(circle at 12% 8%, rgba(232,185,77,.07), transparent 40%),
-  radial-gradient(circle at 88% 18%, rgba(51,226,180,.06), transparent 42%);
-  pointer-events:none;z-index:0;}
-h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;margin:0;letter-spacing:-0.01em;}
-p{margin:0;color:var(--muted);}
-.wrap{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
-.grad-text{background:linear-gradient(100deg,var(--gold2),var(--gold) 55%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.35;
+  -webkit-mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000 20%,transparent 75%)}
+body::after{content:"";position:fixed;left:50%;top:-320px;width:900px;height:600px;transform:translateX(-50%);pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,rgba(242,181,68,.14),transparent)}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.025em}
+p{margin:0}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px;position:relative;z-index:1}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:18px;height:1px;background:currentColor}
+.hl{color:var(--brass)}
+.num{font-variant-numeric:tabular-nums}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:30;background:rgba(10,14,19,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);}
-.navrow{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1160px;margin:0 auto;}
-.brand{display:flex;align-items:baseline;gap:9px;font-family:'Fraunces',serif;font-size:20px;}
-.brand span.k{color:var(--gold);}
-.brand small{font-family:'Inter';font-size:10.5px;color:var(--muted2);font-weight:600;letter-spacing:.03em;}
-.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px;}
-.tab{border:none;background:transparent;color:var(--muted);font-family:'Inter';font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:7px;cursor:pointer;}
-.tab.active{background:var(--gold);color:#221701;}
-
-.view{display:none;} .view.active{display:block;}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(9,12,19,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.logo b{font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:.02em}
+.logo small{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;border-left:1px solid var(--line2);padding-left:10px}
+.links{display:flex;gap:4px}
+.links a{color:var(--muted);text-decoration:none;font-size:13.5px;padding:8px 12px;border-radius:8px}
+.links a:hover{color:var(--text);background:var(--surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:11px;padding:13px 20px;font-weight:600;font-size:14.5px;text-decoration:none;white-space:nowrap;transition:transform .15s,background .15s,border-color .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--brass);color:var(--brass-ink)}
+.btn-primary:hover{background:var(--brass2)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
+.btn-ghost:hover{border-color:var(--brass);color:var(--brass2)}
+.btn-sm{padding:9px 14px;font-size:13px;border-radius:9px}
 
 /* HERO */
-.hero{padding:76px 0 20px;}
-.eyebrow{color:var(--teal);font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-dim);}
-.hero h1{font-size:52px;line-height:1.06;max-width:15ch;}
-.hero p.lead{margin-top:20px;font-size:17.5px;max-width:52ch;}
-.stat-row{display:flex;gap:38px;margin-top:38px;flex-wrap:wrap;}
-.stat b{font-family:'Fraunces',serif;font-size:34px;color:var(--text);display:block;}
-.stat span{font-size:12.5px;color:var(--muted2);}
-.cta-row{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;}
-.btn{background:linear-gradient(100deg,var(--gold),var(--gold2));color:#221701;border:none;border-radius:10px;padding:14px 24px;font-weight:700;font-size:14.5px;cursor:pointer;white-space:nowrap;}
-.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--text);}
+.hero{padding-block:72px 40px;display:grid;grid-template-columns:1.12fr .88fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,7.2vw,92px);font-weight:800;line-height:.93;letter-spacing:-.045em;margin-top:22px}
+.hero h1 .strike{color:var(--dim);position:relative;white-space:nowrap}
+.hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.09em;background:var(--warn);transform:rotate(-2deg);border-radius:4px}
+.lead{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:52ch;margin-top:26px}
+.lead b{color:var(--text);font-weight:600}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.hero-facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.hero-facts div{display:flex;flex-direction:column;gap:2px}
+.hero-facts b{font-family:var(--display);font-size:28px;font-weight:700;letter-spacing:-.02em}
+.hero-facts span{font-size:12.5px;color:var(--dim)}
 
-/* CHART PANEL */
-.chart-panel{margin-top:52px;background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:20px;padding:32px 32px 12px;overflow:hidden;}
-.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
-.chart-head h3{font-size:18px;color:var(--text);}
-.chart-head p{font-size:12.5px;margin-top:4px;}
-.legend{display:flex;gap:18px;font-size:12px;color:var(--muted);}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle;}
-#growthChart{width:100%;height:auto;display:block;}
-.chart-x{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted2);padding:6px 4px 18px;}
+/* Live card */
+.live{background:linear-gradient(180deg,var(--surface2),var(--surface));border:1px solid var(--line2);border-radius:22px;padding:22px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(242,181,68,.05) inset;position:relative}
+.live-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.pulse{display:inline-flex;align-items:center;gap:8px;color:var(--ready)}
+.pulse::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ready);box-shadow:0 0 0 0 rgba(79,224,160,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(79,224,160,0)}100%{box-shadow:0 0 0 0 rgba(79,224,160,0)}}
+.live-person{display:flex;align-items:center;gap:14px}
+.avatar{width:46px;height:46px;border-radius:13px;background:var(--sky-soft);color:var(--sky);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:17px;flex-shrink:0}
+.live-person h3{font-size:20px;font-weight:700}
+.live-person p{font-size:12.5px;color:var(--dim)}
+.live-score{display:flex;align-items:flex-end;justify-content:space-between;margin-top:22px}
+.live-score .big{font-family:var(--display);font-weight:800;font-size:64px;line-height:.9;letter-spacing:-.04em}
+.live-score .big small{font-size:26px;color:var(--dim);font-weight:600}
+.live-score .st{text-align:right}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:100px;border:1px solid transparent;white-space:nowrap}
+.pill.ready{background:var(--ready-soft);color:var(--ready);border-color:rgba(79,224,160,.3)}
+.pill.warn{background:var(--warn-soft);color:var(--warn);border-color:rgba(245,160,75,.3)}
+.pill.sky{background:var(--sky-soft);color:var(--sky);border-color:rgba(134,168,255,.3)}
+.pill.dim{background:var(--surface3);color:var(--muted)}
+.meter{height:8px;background:var(--surface3);border-radius:100px;overflow:hidden;margin-top:14px}
+.meter i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--warn),var(--brass) 45%,var(--ready));transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.track{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:22px}
+.track div{display:flex;flex-direction:column;gap:7px}
+.track i{height:4px;border-radius:4px;background:var(--surface3);transition:background .4s}
+.track div.on i{background:var(--brass)}
+.track div.done i{background:var(--ready)}
+.track span{font-size:10.5px;color:var(--dim);font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.track div.on span,.track div.done span{color:var(--text)}
+.live-note{margin-top:18px;padding:13px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-size:13.5px;color:var(--muted);min-height:48px;display:flex;align-items:center;gap:10px}
+.live-note::before{content:"→";color:var(--brass);font-weight:700}
 
-/* STEPPER */
-.stepper{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:56px;}
-.step{position:relative;padding:0 14px 0 0;}
-.step .num{font-family:'Fraunces',serif;font-size:15px;color:var(--gold);border:1px solid var(--line2);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--bg2);}
-.step:not(:last-child)::after{content:'';position:absolute;top:17px;left:34px;right:0;height:1px;background:linear-gradient(90deg,var(--line2),transparent);}
-.step b{font-size:14px;color:var(--text);display:block;margin-bottom:5px;}
-.step p{font-size:12.5px;}
+/* SECTIONS */
+section.block{padding-block:88px;border-top:1px solid var(--line);position:relative;z-index:1}
+.sec-head{max-width:760px;margin-bottom:44px}
+.sec-head h2{font-size:clamp(32px,4.6vw,56px);font-weight:750;line-height:1;margin-top:16px;letter-spacing:-.035em}
+.sec-head p{color:var(--muted);font-size:17px;margin-top:18px;max-width:60ch}
 
-/* SECTION */
-.section{padding:64px 0;border-top:1px solid var(--line);}
-.section-head{max-width:62ch;margin-bottom:38px;}
-.section-head .eyebrow{margin-bottom:10px;}
-.section-head h2{font-size:31px;}
-.section-head p{margin-top:10px;font-size:15px;}
+/* Problem */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vs{border-radius:20px;padding:30px;border:1px solid var(--line)}
+.vs.old{background:var(--bg2)}
+.vs.new{background:linear-gradient(160deg,rgba(242,181,68,.10),var(--surface) 55%);border-color:rgba(242,181,68,.28)}
+.vs h3{font-size:24px;font-weight:700;margin-top:10px}
+.vs ul{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:12px}
+.vs li{display:flex;gap:12px;font-size:15px;color:var(--muted)}
+.vs li b{color:var(--text);font-weight:600}
+.vs li::before{content:"";flex-shrink:0;width:20px;height:20px;border-radius:6px;margin-top:1px}
+.vs.old li::before{background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 6l8 8M14 6l-8 8' stroke='%23626C83' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.vs.new li::before{background:var(--ready-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%234FE0A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.vs .end{margin-top:24px;padding-top:18px;border-top:1px dashed var(--line2);font-family:var(--display);font-size:19px;font-weight:700}
+.vs.old .end{color:var(--dim)}
+.vs.new .end{color:var(--brass2)}
 
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.svc-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;}
-.svc-ic{width:36px;height:36px;border-radius:9px;background:var(--teal-dim);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:16px;}
-.svc-card b{font-size:14.5px;color:var(--text);display:block;margin-bottom:5px;}
-.svc-card p{font-size:12.5px;}
-.svc-card .tag{display:inline-block;margin-top:10px;font-size:10.5px;color:var(--muted2);border:1px solid var(--line);border-radius:100px;padding:3px 10px;}
+/* Flow */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative}
+.node{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 18px;position:relative}
+.node .n{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em}
+.node h4{font-size:18px;font-weight:700;margin-top:14px}
+.node p{font-size:13px;color:var(--muted);margin-top:6px}
+.node .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-top:14px}
+.node .ic svg{width:20px;height:20px}
+.node:not(:last-child)::after{content:"";position:absolute;right:-12px;top:50%;width:12px;height:2px;background:var(--brass);z-index:2}
+.node.core{border-color:rgba(242,181,68,.4);background:linear-gradient(180deg,rgba(242,181,68,.12),var(--surface))}
+.loopback{margin-top:14px;border:2px dashed rgba(79,224,160,.45);border-top:none;border-radius:0 0 22px 22px;height:34px;margin-inline:9%;position:relative}
+.loopback span{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);background:var(--bg);padding:0 14px;color:var(--ready);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.loopback::before{content:"";position:absolute;left:-7px;top:-8px;border:6px solid transparent;border-bottom:9px solid var(--ready);}
+.motto{margin-top:64px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-family:var(--display);font-weight:800;font-size:clamp(24px,3.6vw,44px);letter-spacing:-.03em;line-height:1.1}
+.motto i{font-style:normal;color:var(--brass)}
+.motto em{font-style:normal;color:var(--dim);font-weight:500}
 
-.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;}
-.card h3{font-size:16px;color:var(--text);margin-bottom:8px;}
-.card p{font-size:13.5px;}
-.card .n{color:var(--gold);font-family:'Fraunces',serif;font-size:26px;display:block;margin-bottom:12px;}
+/* DEMO APP */
+.app{background:var(--bg2);border:1px solid var(--line2);border-radius:22px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.8)}
+.app-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
+.app-url{font-family:var(--mono);font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px}
+.app-url b{color:var(--muted);font-weight:500}
+.app-tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:4px;overflow-x:auto;max-width:100%}
+.app-tab{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.app-tab .k{font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+.app-tab.active{background:var(--surface3);color:var(--text)}
+.app-tab.active .k{color:var(--brass)}
+.app-body{padding:26px;min-height:600px}
+.pane[hidden]{display:none!important}
+.pane-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.pane-head h3{font-size:26px;font-weight:700}
+.pane-head p{color:var(--muted);font-size:14px;margin-top:4px}
 
-/* BAR CHART */
-.barchart{margin-top:10px;}
-.bar-row{display:grid;grid-template-columns:120px 1fr 90px;align-items:center;gap:16px;padding:14px 0;}
-.bar-row .lbl{font-size:13.5px;color:var(--text);}
-.bar-track{height:12px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--line);}
-.bar-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
-.bar-row .val{font-family:'Fraunces',serif;font-size:17px;color:var(--teal);text-align:right;}
+/* Referral form */
+.refer{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field label,.flabel{font-size:12.5px;color:var(--muted);font-weight:500}
+.field input,.field select{background:var(--bg2);border:1px solid var(--line2);color:var(--text);border-radius:10px;padding:12px 13px;font:inherit;font-size:14.5px;width:100%}
+.field input:focus,.field select:focus{outline:none;border-color:var(--brass)}
+.checks{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.check{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;font-size:14px;transition:border-color .15s,background .15s}
+.check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--dim);margin:0;flex-shrink:0;display:grid;place-items:center;cursor:pointer}
+.check input:checked{background:var(--brass);border-color:var(--brass)}
+.check input:checked::after{content:"";width:9px;height:5px;border-left:2px solid var(--brass-ink);border-bottom:2px solid var(--brass-ink);transform:rotate(-45deg) translate(1px,-1px)}
+.check:has(input:checked){border-color:rgba(242,181,68,.45);background:var(--brass-soft)}
+.check small{margin-left:auto;color:var(--dim);font-family:var(--mono);font-size:10.5px}
+.form-err{color:var(--warn);font-size:13px;margin-top:10px;min-height:18px}
+.diag-empty{height:100%;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;color:var(--dim);padding:20px}
+.diag-empty svg{width:54px;height:54px;opacity:.6}
+.diag-empty b{color:var(--muted);font-size:16px}
+.scan{display:flex;flex-direction:column;gap:12px;padding:10px 0}
+.scan div{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);opacity:.35;transition:opacity .3s}
+.scan div.on{opacity:1}
+.scan div::before{content:"";width:16px;height:16px;border-radius:50%;border:2px solid var(--dim)}
+.scan div.on::before{border-color:var(--ready);background:var(--ready)}
+.plan-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.plan-top h4{font-size:22px;font-weight:700}
+.plan-top p{color:var(--dim);font-size:13px}
+.plan-score{text-align:right}
+.plan-score b{font-family:var(--display);font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.plan-list{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.plan-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);animation:rise .45s both}
+.plan-item .dot{width:8px;height:8px;border-radius:50%;background:var(--brass);flex-shrink:0}
+.plan-item b{font-size:14px;font-weight:600;display:block}
+.plan-item span{font-size:12px;color:var(--dim)}
+.plan-item .pill{margin-left:auto}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.plan-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.plan-foot p{font-size:12.5px;color:var(--muted);flex:1;min-width:200px}
 
-.cta-band{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:20px;padding:44px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden;}
-.cta-band h3{font-size:23px;max-width:30ch;color:var(--text);}
-footer{padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:12.5px;color:var(--muted2);}
+/* Pipeline */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi span{font-size:12px;color:var(--dim);display:block}
+.kpi b{font-family:var(--display);font-size:32px;font-weight:750;letter-spacing:-.03em;line-height:1.1;display:block;margin-top:4px}
+.kpi.ok b{color:var(--ready)}
+.pipe-wrap{display:flex;flex-direction:column-reverse;gap:14px}
+.kb-scroll{overflow-x:auto;padding-bottom:4px}
+.kb{display:grid;grid-template-columns:repeat(4,minmax(200px,1fr));gap:10px;min-width:820px}
+.col{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:380px}
+.col-h{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 10px}
+.col-h b{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.col-h b::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--dim))}
+.col-h span{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.col.ready{border-color:rgba(79,224,160,.3);background:linear-gradient(180deg,rgba(79,224,160,.06),var(--bg) 60%)}
+.lcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;transition:border-color .15s,transform .15s;width:100%;text-align:left;color:inherit;display:block;font:inherit}
+.lcard:hover{border-color:var(--brass);transform:translateY(-1px)}
+.lcard.flash{animation:flash 1.2s}
+@keyframes flash{0%{box-shadow:0 0 0 2px var(--ready)}100%{box-shadow:0 0 0 0 transparent}}
+.lcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.lcard b{font-size:13.5px;font-weight:600}
+.lcard .sc{font-family:var(--mono);font-size:12px}
+.lcard .rl{font-size:11.5px;color:var(--dim);margin-top:2px}
+.lcard .bar{height:4px;background:var(--surface3);border-radius:4px;margin-top:10px;overflow:hidden}
+.lcard .bar i{display:block;height:100%;border-radius:4px}
+.lcard .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.chip{font-size:10.5px;padding:2px 7px;border-radius:6px;background:var(--surface3);color:var(--muted)}
+.chip.done{background:var(--ready-soft);color:var(--ready)}
+.chip.progress{background:var(--warn-soft);color:var(--warn)}
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:300px 1fr;gap:6px 24px;align-items:start}
+.sim .ctl{display:flex;flex-direction:column}
+.sim h4{font-size:16px;font-weight:700}
+.sim p.s{font-size:12.5px;color:var(--muted);margin-top:4px}
+.sim .btn{margin-top:14px;width:100%}
+.day{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.06em}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;max-height:172px;overflow-y:auto}
+.log li:first-child{border-top:none}
+.log li{font-size:12.5px;color:var(--muted);padding:8px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:48px 1fr;gap:8px;animation:rise .35s both}
+.log li span{font-family:var(--mono);font-size:10.5px;color:var(--dim);padding-top:2px}
+.log li.win{color:var(--ready)}
 
-/* DASHBOARD */
-.dash{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 65px);position:relative;z-index:1;}
-.dside{border-right:1px solid var(--line);padding:22px 16px;background:var(--bg2);}
-.dside h4{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted2);font-weight:700;padding:0 8px 10px;}
-.lead-item{display:flex;justify-content:space-between;align-items:center;padding:11px 10px;border-radius:10px;cursor:pointer;margin-bottom:3px;}
-.lead-item:hover{background:var(--surface);}
-.lead-item.active{background:var(--surface2);border:1px solid var(--line2);}
-.lead-name{font-size:13.5px;color:var(--text);font-weight:500;}
-.lead-realtor{font-size:11px;color:var(--muted2);margin-top:1px;}
+/* File */
+.file{display:grid;grid-template-columns:260px 1fr;gap:18px}
+.flist{display:flex;flex-direction:column;gap:4px;max-height:640px;overflow-y:auto}
+.fitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid transparent;background:transparent;color:inherit;cursor:pointer;text-align:left;font:inherit;width:100%}
+.fitem:hover{background:var(--surface)}
+.fitem.active{background:var(--surface2);border-color:var(--line2)}
+.fitem b{font-size:13.5px;font-weight:600;display:block}
+.fitem span{font-size:11.5px;color:var(--dim)}
+.fitem .sc{font-family:var(--mono);font-size:12px}
+.fhead{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.fhead h3{font-size:30px;font-weight:750}
+.fhead p{color:var(--muted);font-size:13.5px;margin-top:4px}
+.ring{position:relative;width:118px;height:118px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg);display:block}
+.ring .rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .rv b{font-family:var(--display);font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.ring .rv span{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;margin-top:3px}
+.fgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;margin-top:22px}
+.svc{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);margin-bottom:8px}
+.svc button.box{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--dim);background:transparent;cursor:pointer;flex-shrink:0;display:grid;place-items:center;color:var(--bg);font-weight:800;font-size:13px}
+.svc button.box.progress{border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.svc button.box.done{border-color:var(--ready);background:var(--ready)}
+.svc .bd{flex:1;min-width:0}
+.svc .bd b{font-size:14px;font-weight:600;display:block}
+.svc .bd span{font-size:12px;color:var(--dim)}
+.hint{font-size:12px;color:var(--dim);margin-bottom:10px}
+.rview{border-radius:14px;border:1px solid rgba(134,168,255,.3);background:linear-gradient(180deg,var(--sky-soft),transparent 70%);padding:16px}
+.rview .mono{color:var(--sky)}
+.rview .msg{margin-top:10px;font-size:14px;color:var(--text);line-height:1.55}
+.auto{margin-top:14px}
+.auto li{list-style:none;display:flex;gap:10px;font-size:13px;color:var(--muted);padding:8px 0;border-top:1px solid var(--line)}
+.auto ul{padding:0;margin:8px 0 0}
+.auto li b{font-family:var(--mono);font-size:10.5px;color:var(--brass);font-weight:500;min-width:70px;padding-top:2px}
+.factions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 
-.dmain{padding:32px 36px;overflow-x:auto;}
-.dhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:18px;}
-.dhead h2{font-size:25px;}
-.dhead p{font-size:13px;margin-top:4px;}
-.ringwrap{position:relative;width:104px;height:104px;flex-shrink:0;}
-.ringwrap svg{transform:rotate(-90deg);}
-.ringwrap .rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.ringwrap .rv b{font-family:'Fraunces',serif;font-size:22px;color:var(--text);}
-.ringwrap .rv span{font-size:9px;color:var(--muted2);letter-spacing:.03em;}
+/* Services */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sv{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.sv h4{font-size:17px;font-weight:700}
+.sv p{font-size:13px;color:var(--muted);flex:1}
+.sv .pill{align-self:flex-start;margin-top:6px}
+.sv.wide{grid-column:span 2;background:linear-gradient(135deg,rgba(242,181,68,.10),var(--surface) 60%);border-color:rgba(242,181,68,.28)}
 
-.checklist{display:flex;flex-direction:column;gap:10px;margin-top:6px;}
-.chk{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;}
-.chk-box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--muted2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;}
-.chk-box.done{background:var(--teal);border-color:var(--teal);color:#04231A;}
-.chk-box.progress{border-color:var(--amber);color:var(--amber);}
-.chk-body{flex:1;} .chk-body b{font-size:14.5px;color:var(--text);font-weight:600;} .chk-body p{font-size:12.5px;margin-top:2px;}
-.chk-tag{font-size:11px;padding:4px 10px;border-radius:100px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;}
-.chk-tag.done{color:var(--teal);border-color:var(--teal);} .chk-tag.progress{color:var(--amber);border-color:var(--amber);}
-.actrow{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--gold);color:var(--text);padding:12px 20px;border-radius:10px;font-size:13.5px;opacity:0;transition:.25s;pointer-events:none;z-index:50;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* Business */
+.streams{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.stream{border-top:2px solid var(--brass);padding-top:16px}
+.stream .mono{color:var(--dim)}
+.stream h4{font-size:19px;font-weight:700;margin-top:8px}
+.stream p{font-size:13.5px;color:var(--muted);margin-top:6px}
+.calc{display:grid;grid-template-columns:1fr 1.1fr;gap:16px;background:var(--surface);border:1px solid var(--line2);border-radius:22px;padding:26px}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.preset{background:var(--bg2);border:1px solid var(--line2);color:var(--text);border-radius:12px;padding:10px 14px;cursor:pointer;text-align:left;font:inherit}
+.preset b{font-family:var(--display);font-size:18px;font-weight:700;display:block;line-height:1.1}
+.preset span{font-size:11.5px;color:var(--dim)}
+.preset.active{border-color:var(--brass);background:var(--brass-soft)}
+.rng{margin-bottom:18px}
+.rng .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.rng label{font-size:13.5px;color:var(--muted)}
+.rng output{font-family:var(--mono);font-size:14px;color:var(--text);font-weight:600}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--brass) var(--p,50%),var(--surface3) var(--p,50%));outline:none;margin:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--text);border:4px solid var(--brass);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--text);border:4px solid var(--brass);cursor:pointer}
+.calc-note{font-size:12px;color:var(--dim);margin-top:4px}
+.out{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column}
+.out-big span{font-size:13px;color:var(--muted)}
+.out-big b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(40px,5.4vw,68px);line-height:1;letter-spacing:-.04em;color:var(--brass2);margin-top:6px}
+.out-big small{font-size:13px;color:var(--dim)}
+.split{display:flex;height:12px;border-radius:12px;overflow:hidden;margin-top:22px;background:var(--surface3)}
+.split i{display:block;height:100%;transition:width .4s}
+.split-leg{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+.split-leg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;background:var(--c);vertical-align:middle}
+.out-rows{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:22px}
+.out-rows div{background:var(--bg2);padding:14px 16px}
+.out-rows span{font-size:12px;color:var(--dim);display:block}
+.out-rows b{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:-.02em}
 
-@media(max-width:860px){
-  .hero h1{font-size:34px;max-width:none;} .stepper{grid-template-columns:1fr 1fr;row-gap:26px;} .step:nth-child(2n)::after{display:none;}
-  .svc-grid,.cards3{grid-template-columns:1fr;}
-  .dash{grid-template-columns:1fr;} .dside{border-right:none;border-bottom:1px solid var(--line);}
-  .navrow{flex-direction:column;gap:12px;align-items:flex-start;}
-  .bar-row{grid-template-columns:90px 1fr 60px;gap:10px;}
+/* Alliance */
+.ally{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+.side{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px}
+.side h3{font-size:24px;font-weight:750;margin-top:10px}
+.side ul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.side li{font-size:13.5px;padding:8px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--line)}
+.side.gl{border-color:rgba(242,181,68,.3)}
+.side.gl .mono{color:var(--brass)}
+.side.rt .mono{color:var(--sky)}
+.plus{display:grid;place-items:center;font-family:var(--display);font-size:40px;font-weight:300;color:var(--dim)}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.rule{padding:20px;border-radius:16px;border:1px dashed var(--line2)}
+.rule .mono{color:var(--dim)}
+.rule p{margin-top:8px;font-size:14.5px;color:var(--text)}
+
+/* Close */
+.close{padding-block:110px 90px;text-align:left;border-top:1px solid var(--line);position:relative;z-index:1}
+.close h2{font-size:clamp(38px,6.4vw,84px);font-weight:800;line-height:.95;letter-spacing:-.045em;max-width:14ch}
+.close p{color:var(--muted);font-size:18px;margin-top:22px;max-width:56ch}
+footer{border-top:1px solid var(--line);padding-block:26px calc(26px + env(safe-area-inset-bottom,0px));position:relative;z-index:1}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--surface3);border:1px solid var(--brass);color:var(--text);padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1020px){
+  .hero{grid-template-columns:1fr;gap:40px}
+  .flow{grid-template-columns:1fr 1fr}
+  .node:not(:last-child)::after{display:none}
+  .loopback{display:none}
+  .svc-grid,.streams{grid-template-columns:1fr 1fr}
+  .sim{grid-template-columns:1fr}
+  .file,.refer,.calc,.fgrid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .flist{flex-direction:row;overflow-x:auto;max-height:none}
+  .fitem{min-width:190px}
+  .ally{grid-template-columns:1fr}
+  .plus{font-size:28px}
+  .rules{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .links{display:none}
+  .logo small{display:none}
+  .versus{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .svc-grid,.streams{grid-template-columns:1fr}
+  .sv.wide{grid-column:auto}
+  .app-body{padding:16px}
+  section.block{padding-block:64px}
+  .out-rows{grid-template-columns:1fr}
+  .hero{padding-block:48px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="navrow">
-    <div class="brand"><span class="k">🔑</span>LLAVE <small>POWERED&nbsp;BY&nbsp;GL&nbsp;TAX&nbsp;SOLUTIONS</small></div>
-    <div class="tabs">
-      <button class="tab active" data-view="landing">Presentación</button>
-      <button class="tab" data-view="dashboard">Demo del sistema</button>
-    </div>
-  </div>
-</nav>
 
-<!-- LANDING -->
-<div class="view active" id="view-landing">
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="LLAVE inicio">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#F2B544"/><circle cx="12" cy="16" r="5" fill="none" stroke="#241700" stroke-width="2.6"/><path d="M17 16h9M22.5 16v4M26 16v3" stroke="#241700" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <b>LLAVE</b><small>by GL Tax Solutions</small>
+    </a>
+    <nav class="links" aria-label="Secciones">
+      <a href="#problema">Problema</a><a href="#flujo">Cómo funciona</a><a href="#demo">Demo</a><a href="#negocio">Negocio</a><a href="#alianza">Alianza</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#demo">Ver demo en vivo</a>
+  </div>
+</header>
+
+<main id="top">
   <div class="wrap">
     <section class="hero">
-      <div class="eyebrow">PARA REALTORS Y BROKERAGES</div>
-      <h1>Deja de perder al <span class="grad-text">comprador</span> que casi califica.</h1>
-      <p class="lead">Cuando un prospecto no está listo para comprar, LLAVE lo recibe, lo prepara con servicios fiscales y financieros, y te lo regresa listo para cerrar — sin que muevas un dedo.</p>
-      <div class="stat-row">
-        <div class="stat"><b id="statLeads">0</b><span>LEADS RECUPERABLES / MES A ESCALA</span></div>
-        <div class="stat"><b id="statScore">0%</b><span>READINESS SCORE PROMEDIO AL CIERRE</span></div>
-        <div class="stat"><b>24/7</b><span>SEGUIMIENTO AUTOMATIZADO</span></div>
-      </div>
-      <div class="cta-row">
-        <button class="btn tab" data-view="dashboard">Ver demo del sistema</button>
-        <button class="btn ghost">Agendar alianza</button>
-      </div>
-
-      <div class="chart-panel">
-        <div class="chart-head">
-          <div>
-            <h3>Clientes recuperados por mes</h3>
-            <p>Prospectos que hoy se pierden vs. los que LLAVE regresa listos para comprar</p>
-          </div>
-          <div class="legend">
-            <span><i style="background:var(--muted2)"></i>Sin LLAVE</span>
-            <span><i style="background:var(--teal)"></i>Con LLAVE</span>
-          </div>
+      <div>
+        <span class="kicker">Plataforma para Realtors y brokerages</span>
+        <h1>Hoy <span class="strike">no califica.</span><br>Mañana <span class="hl">compra.</span></h1>
+        <p class="lead">LLAVE recibe a los prospectos que un Realtor <b>todavía no puede cerrar</b>, detecta qué les falta, coordina los servicios de taxes, crédito y documentos, y los <b>regresa listos para comprar casa</b>.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#demo">Probar la plataforma</a>
+          <a class="btn btn-ghost" href="#negocio">Ver el modelo de negocio</a>
         </div>
-        <svg id="growthChart" viewBox="0 0 760 220" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="fillTeal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#33E2B4" stop-opacity=".35"/>
-              <stop offset="100%" stop-color="#33E2B4" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <g stroke="rgba(255,255,255,.06)">
-            <line x1="0" y1="20" x2="760" y2="20"/><line x1="0" y1="70" x2="760" y2="70"/>
-            <line x1="0" y1="120" x2="760" y2="120"/><line x1="0" y1="170" x2="760" y2="170"/>
-          </g>
-          <path d="M0,175 L127,168 L254,158 L381,148 L508,142 L634,136 L760,130" fill="none" stroke="var(--muted2)" stroke-width="2" stroke-dasharray="4 5"/>
-          <path id="areaPath" d="M0,175 L127,150 L254,118 L381,90 L508,58 L634,32 L760,14 L760,220 L0,220 Z" fill="url(#fillTeal)" opacity="0"/>
-          <path id="linePath" d="M0,175 L127,150 L254,118 L381,90 L508,58 L634,32 L760,14" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="chart-x"><span>Mes 1</span><span>Mes 2</span><span>Mes 3</span><span>Mes 4</span><span>Mes 5</span><span>Mes 6</span><span>Mes 7</span></div>
+        <div class="hero-facts">
+          <div><b class="num">1 enlace</b><span>para que el Realtor refiera</span></div>
+          <div><b class="num">7</b><span>servicios coordinados</span></div>
+          <div><b class="num">500</b><span>leads/mes con 100 Realtors</span></div>
+        </div>
       </div>
 
-      <div class="stepper">
-        <div class="step"><div class="num">1</div><b>Realtor identifica</b><p>Prospecto interesado que aún no califica.</p></div>
-        <div class="step"><div class="num">2</div><b>Lo envía a LLAVE</b><p>Un solo enlace, cero trabajo extra.</p></div>
-        <div class="step"><div class="num">3</div><b>Diagnóstico</b><p>La plataforma detecta qué le falta.</p></div>
-        <div class="step"><div class="num">4</div><b>Servicios + seguimiento</b><p>Red de especialistas + recordatorios.</p></div>
-        <div class="step"><div class="num">5</div><b>Regresa listo</b><p>Con readiness score, a cerrar la compra.</p></div>
+      <div class="live" aria-live="polite">
+        <div class="live-top">
+          <span class="mono pulse">Expediente en vivo</span>
+          <span class="mono" style="color:var(--dim)" id="liveDay">Día 1</span>
+        </div>
+        <div class="live-person">
+          <div class="avatar">JR</div>
+          <div><h3>Jonathan Reyes</h3><p>Referido por Carlos Méndez · RE/MAX</p></div>
+        </div>
+        <div class="live-score">
+          <div class="big num"><span id="liveScore">28</span><small>/100</small></div>
+          <div class="st"><div class="mono" style="color:var(--dim);margin-bottom:6px">Readiness score</div><span class="pill warn" id="livePill">En preparación</span></div>
+        </div>
+        <div class="meter"><i id="liveMeter" style="width:28%"></i></div>
+        <div class="track" id="liveTrack">
+          <div class="on"><i></i><span>Referido</span></div>
+          <div><i></i><span>Diagnóstico</span></div>
+          <div><i></i><span>Servicios</span></div>
+          <div><i></i><span>Seguimiento</span></div>
+          <div><i></i><span>Listo</span></div>
+        </div>
+        <div class="live-note" id="liveNote">Carlos lo envió desde su enlace de LLAVE. Le interesa una casa de $340K.</div>
       </div>
     </section>
+  </div>
 
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow" style="color:var(--gold)">EL SERVICIO</div>
-        <h2>Un solo lugar para todo lo que le falta al cliente</h2>
-        <p>Nosotros no operamos cada servicio — coordinamos una red de especialistas y mantenemos al cliente en movimiento hasta que esté listo para comprar.</p>
+  <!-- PROBLEMA -->
+  <section class="block" id="problema">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">El problema</span>
+        <h2>Cada Realtor tiene una lista de compradores que “casi califican”.</h2>
+        <p>Tienen interés y tienen ingresos, pero les faltan taxes, crédito o papeles. Hoy el Realtor les dice “vuelve cuando estés listo” y casi nunca vuelven.</p>
+      </div>
+      <div class="versus">
+        <div class="vs old">
+          <span class="mono" style="color:var(--dim)">Hoy</span>
+          <h3>El lead se enfría</h3>
+          <ul>
+            <li><span><b>Taxes atrasados</b> y nadie le ayuda a ponerse al día</span></li>
+            <li><span><b>Crédito bajo</b> y no sabe por dónde empezar</span></li>
+            <li><span><b>Ingresos 1099</b> que el lender no puede comprobar</span></li>
+            <li><span>El Realtor <b>no tiene tiempo</b> de darle seguimiento por meses</span></li>
+          </ul>
+          <div class="end">Resultado: comisión perdida.</div>
+        </div>
+        <div class="vs new">
+          <span class="mono" style="color:var(--brass)">Con LLAVE</span>
+          <h3>El lead se prepara</h3>
+          <ul>
+            <li><span><b>Diagnóstico automático</b> de lo que le falta</span></li>
+            <li><span><b>Plan de servicios</b> con especialistas internos y aliados</span></li>
+            <li><span><b>Seguimiento 24/7</b> con recordatorios y avances</span></li>
+            <li><span>El Realtor ve el progreso y <b>recibe al cliente listo</b></span></li>
+          </ul>
+          <div class="end">Resultado: cartera de futuros compradores.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLUJO -->
+  <section class="block" id="flujo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Cómo funciona</span>
+        <h2>Del “todavía no” al cierre, en un solo circuito.</h2>
+      </div>
+      <div class="flow">
+        <div class="node"><span class="n">01</span>
+          <div class="ic" style="background:var(--sky-soft);color:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg></div>
+          <h4>Realtor</h4><p>Tiene un prospecto interesado que aún no califica.</p></div>
+        <div class="node core"><span class="n">02</span>
+          <div class="ic" style="background:var(--brass-soft);color:var(--brass)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg></div>
+          <h4>LLAVE</h4><p>Lo recibe con un enlace. Cero trabajo extra para el Realtor.</p></div>
+        <div class="node"><span class="n">03</span>
+          <div class="ic" style="background:var(--brass-soft);color:var(--brass)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg></div>
+          <h4>Diagnóstico</h4><p>Detecta si necesita taxes, crédito, bookkeeping o documentos.</p></div>
+        <div class="node"><span class="n">04</span>
+          <div class="ic" style="background:var(--warn-soft);color:var(--warn)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l2 2 3-4"/></svg></div>
+          <h4>Servicios + seguimiento</h4><p>Especialistas trabajan; la plataforma recuerda y mide.</p></div>
+        <div class="node"><span class="n">05</span>
+          <div class="ic" style="background:var(--ready-soft);color:var(--ready)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+          <h4>Cliente listo</h4><p>Readiness score alto. Listo para pre-aprobación.</p></div>
+      </div>
+      <div class="loopback" aria-hidden="true"><span>Regresa al Realtor para cerrar la compra</span></div>
+
+      <div class="motto" aria-label="Taxes, Tecnología, Seguimiento, Futuro comprador">
+        <span>Taxes</span><i>→</i><span>Tecnología</span><i>→</i><span>Seguimiento</span><i>→</i><span class="hl">Futuro comprador</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section class="block" id="demo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Demo en vivo</span>
+        <h2>Pruébalo como lo usaría un Realtor.</h2>
+        <p>Refiere un prospecto, mira cómo la plataforma arma su plan y simula 30 días para ver cómo avanza la cartera. Todos los datos son de ejemplo.</p>
+      </div>
+
+      <div class="app">
+        <div class="app-bar">
+          <div class="app-url"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg><b>app.llave.com</b>/<span id="urlPath">referir</span></div>
+          <div class="app-tabs" role="tablist">
+            <button class="app-tab active" role="tab" data-pane="refer"><span class="k">01</span>Referir prospecto</button>
+            <button class="app-tab" role="tab" data-pane="pipe"><span class="k">02</span>Pipeline</button>
+            <button class="app-tab" role="tab" data-pane="file"><span class="k">03</span>Expediente</button>
+          </div>
+        </div>
+        <div class="app-body">
+
+          <!-- REFER -->
+          <div class="pane" id="pane-refer">
+            <div class="pane-head">
+              <div><h3>Referir un prospecto</h3><p>Lo que ve el Realtor. Un formulario de un minuto.</p></div>
+              <span class="pill sky">Vista del Realtor</span>
+            </div>
+            <div class="refer">
+              <form class="panel" id="referForm" novalidate>
+                <div class="field"><label for="fName">Nombre del prospecto</label><input id="fName" value="Daniela Ortiz" autocomplete="off"></div>
+                <div class="field"><label for="fRealtor">Realtor que refiere</label>
+                  <select id="fRealtor">
+                    <option>Ana Pérez · Keller Williams</option>
+                    <option>Carlos Méndez · RE/MAX</option>
+                    <option>Luis Fuentes · Coldwell Banker</option>
+                    <option>Sofía Blanco · eXp Realty</option>
+                  </select></div>
+                <span class="flabel">¿Qué le impide calificar hoy?</span>
+                <div class="checks">
+                  <label class="check"><input type="checkbox" id="s_taxes" data-k="taxes" checked>Taxes atrasados o sin declarar<small>TAX</small></label>
+                  <label class="check"><input type="checkbox" id="s_credit" data-k="credit" checked>Crédito por debajo de 620<small>CRÉDITO</small></label>
+                  <label class="check"><input type="checkbox" id="s_self" data-k="self" checked>Trabaja por cuenta propia (1099)<small>INGRESOS</small></label>
+                  <label class="check"><input type="checkbox" id="s_docs" data-k="docs">Ingresos difíciles de comprobar<small>DOCS</small></label>
+                  <label class="check"><input type="checkbox" id="s_debt" data-k="debt">Deudas altas frente a sus ingresos<small>DTI</small></label>
+                  <label class="check"><input type="checkbox" id="s_first" data-k="ready" checked>Compra su primera casa<small>EDUCACIÓN</small></label>
+                </div>
+                <div class="form-err" id="formErr"></div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Enviar a LLAVE</button>
+              </form>
+
+              <div class="panel" id="diag">
+                <div class="diag-empty">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg>
+                  <b>Aquí aparece el plan del cliente</b>
+                  <span>Marca las situaciones y presiona “Enviar a LLAVE”.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PIPELINE -->
+          <div class="pane" id="pane-pipe" hidden>
+            <div class="pane-head">
+              <div><h3>Pipeline de futuros compradores</h3><p>Lo que ve GL Tax: cada cliente, en qué etapa está y qué le falta.</p></div>
+              <span class="pill dim">Vista del operador</span>
+            </div>
+            <div class="kpis">
+              <div class="kpi"><span>Clientes en preparación</span><b class="num" id="kActive">0</b></div>
+              <div class="kpi ok"><span>Listos para comprar</span><b class="num" id="kReady">0</b></div>
+              <div class="kpi"><span>Readiness promedio</span><b class="num" id="kAvg">0</b></div>
+              <div class="kpi"><span>Servicios activos</span><b class="num" id="kSvc">0</b></div>
+            </div>
+            <div class="pipe-wrap">
+              <div class="kb-scroll"><div class="kb" id="kb"></div></div>
+              <aside class="sim">
+                <div class="ctl"><span class="day" id="dayLbl">HOY</span>
+                <h4>Simula el paso del tiempo</h4>
+                <p class="s">Cada clic avanza 30 días: servicios completados, recordatorios automáticos y clientes que regresan al Realtor.</p>
+                <button class="btn btn-primary" id="simBtn">Avanzar 30 días</button></div>
+                <ul class="log" id="log"></ul>
+              </aside>
+            </div>
+          </div>
+
+          <!-- FILE -->
+          <div class="pane" id="pane-file" hidden>
+            <div class="file">
+              <div class="flist" id="flist"></div>
+              <div id="fmain"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="block" id="servicios">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Los servicios</span>
+        <h2>La plataforma es nuestra. Los servicios los coordinamos.</h2>
+        <p>No tenemos que hacer todo en persona. GL Tax opera lo fiscal y una red de especialistas cubre el resto. La tecnología mantiene a todos en movimiento.</p>
       </div>
       <div class="svc-grid">
-        <div class="svc-card"><div class="svc-ic">◆</div><b>Preparación de taxes</b><p>Corrección y presentación de declaraciones atrasadas o incorrectas.</p><span class="tag">Interno</span></div>
-        <div class="svc-card"><div class="svc-ic">◇</div><b>Tax planning</b><p>Estrategia fiscal orientada a calificar para hipoteca.</p><span class="tag">Interno</span></div>
-        <div class="svc-card"><div class="svc-ic">▤</div><b>Organización de documentos</b><p>Ingresos y comprobantes listos para el prestamista.</p><span class="tag">Interno</span></div>
-        <div class="svc-card"><div class="svc-ic">✓</div><b>Credit repair</b><p>Disputa de cuentas y reconstrucción de historial.</p><span class="tag">Red de especialistas</span></div>
-        <div class="svc-card"><div class="svc-ic">▥</div><b>Bookkeeping self-employed</b><p>Contabilidad mensual para ingresos comprobables.</p><span class="tag">Red de especialistas</span></div>
-        <div class="svc-card"><div class="svc-ic">●</div><b>Homebuyer readiness</b><p>Seguimiento y recordatorios hasta estar listo.</p><span class="tag">Automatizado</span></div>
+        <div class="sv"><h4>Preparación o corrección de taxes</h4><p>Declaraciones atrasadas o con errores, listas para el lender.</p><span class="pill ready">GL Tax · interno</span></div>
+        <div class="sv"><h4>Tax planning</h4><p>Estrategia fiscal pensada para calificar a una hipoteca.</p><span class="pill ready">GL Tax · interno</span></div>
+        <div class="sv"><h4>Bookkeeping self-employed</h4><p>Contabilidad mensual para que los ingresos 1099 se puedan comprobar.</p><span class="pill ready">GL Tax · interno</span></div>
+        <div class="sv"><h4>Organización de ingresos y documentos</h4><p>W-2, 1099, estados de cuenta y cartas, en un solo expediente.</p><span class="pill ready">GL Tax · interno</span></div>
+        <div class="sv"><h4>Credit repair</h4><p>Preparación de crédito y disputa de cuentas con especialistas.</p><span class="pill sky">Red de especialistas</span></div>
+        <div class="sv"><h4>Homebuyer Readiness</h4><p>Educación y metas claras para el comprador de primera vez.</p><span class="pill sky">Red de especialistas</span></div>
+        <div class="sv wide"><h4>Seguimiento automático</h4><p>Recordatorios por SMS y correo, avances medidos con el readiness score y actualizaciones al Realtor sin que tenga que preguntar.</p><span class="pill warn">Tecnología LLAVE</span></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow" style="color:var(--gold)">EL MODELO</div>
-        <h2>Ingresos recurrentes, no un tax return suelto</h2>
-        <p>El mismo ecosistema genera varias fuentes de ingreso a la vez.</p>
+  <!-- NEGOCIO -->
+  <section class="block" id="negocio">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">El negocio</span>
+        <h2>Varias fuentes de ingreso, un mismo ecosistema.</h2>
+        <p>No dependemos solo de cobrar un tax return. El mismo cliente genera ingresos durante todo el camino hacia la compra.</p>
       </div>
-      <div class="cards3">
-        <div class="card"><span class="n">01</span><h3>Servicios al cliente</h3><p>Taxes, readiness, bookkeeping y planning — de forma recurrente, no solo una vez al año.</p></div>
-        <div class="card"><span class="n">02</span><h3>Suscripción de brokerage</h3><p>Realtors y brokerages pagan por acceso a la plataforma y al pipeline de leads recuperados.</p></div>
-        <div class="card"><span class="n">03</span><h3>Servicios adyacentes</h3><p>Mortgage y otros servicios de real estate, bajo la estructura legal correspondiente.</p></div>
+      <div class="streams">
+        <div class="stream"><span class="mono">Ingreso 1</span><h4>Taxes y readiness</h4><p>Preparación, corrección y planificación por cliente referido.</p></div>
+        <div class="stream"><span class="mono">Ingreso 2</span><h4>Servicios recurrentes</h4><p>Bookkeeping mensual y seguimiento para self-employed.</p></div>
+        <div class="stream"><span class="mono">Ingreso 3</span><h4>Cuentas para Realtors</h4><p>Suscripciones para Realtors y brokerages con su propio portal.</p></div>
+        <div class="stream"><span class="mono">Ingreso 4</span><h4>Real estate y mortgage</h4><p>Más adelante, servicios relacionados, bajo la estructura legal que corresponda.</p></div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="section-head">
-        <div class="eyebrow" style="color:var(--gold)">LA ESCALA</div>
-        <h2>Crece con Realtors, no con oficinas</h2>
-        <p>Estimado a 5 prospectos por Realtor al mes.</p>
-      </div>
-      <div class="barchart" id="barchart">
-        <div class="bar-row"><span class="lbl">20 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="20"></div></div><span class="val">100</span></div>
-        <div class="bar-row"><span class="lbl">50 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="50"></div></div><span class="val">250</span></div>
-        <div class="bar-row"><span class="lbl">100 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="100"></div></div><span class="val">500</span></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="cta-band">
-        <h3>¿Listos para dejar de perder prospectos que casi califican?</h3>
-        <div style="display:flex;gap:10px;">
-          <button class="btn ghost tab" data-view="dashboard">Ver demo del sistema</button>
-          <button class="btn">Agendar alianza</button>
+      <div class="calc">
+        <div>
+          <span class="flabel">Escala rápida (5 prospectos por Realtor al mes)</span>
+          <div class="presets" id="presets" style="margin-top:10px">
+            <button class="preset" data-r="20"><b>20 Realtors</b><span>100 leads/mes</span></button>
+            <button class="preset active" data-r="50"><b>50 Realtors</b><span>250 leads/mes</span></button>
+            <button class="preset" data-r="100"><b>100 Realtors</b><span>500 leads/mes</span></button>
+          </div>
+          <div class="rng"><div class="top"><label for="cR">Realtors activos</label><output id="oR"></output></div><input type="range" id="cR" min="5" max="200" step="5" value="50"></div>
+          <div class="rng"><div class="top"><label for="cL">Prospectos por Realtor al mes</label><output id="oL"></output></div><input type="range" id="cL" min="1" max="15" step="1" value="5"></div>
+          <div class="rng"><div class="top"><label for="cC">% que contrata servicios</label><output id="oC"></output></div><input type="range" id="cC" min="5" max="80" step="5" value="30"></div>
+          <div class="rng"><div class="top"><label for="cT">Ingreso promedio por cliente</label><output id="oT"></output></div><input type="range" id="cT" min="200" max="3000" step="50" value="800"></div>
+          <div class="rng"><div class="top"><label for="cS">Suscripción mensual por Realtor</label><output id="oS"></output></div><input type="range" id="cS" min="0" max="300" step="10" value="99"></div>
+          <p class="calc-note">Los porcentajes y precios son supuestos de ejemplo para la conversación, no proyecciones. Ajústalos con los números reales.</p>
+        </div>
+        <div class="out">
+          <div class="out-big"><span>Ingreso anual estimado</span><b class="num" id="oYear">$0</b><small id="oMonth">$0 al mes</small></div>
+          <div class="split"><i id="barSvc" style="background:var(--brass)"></i><i id="barSub" style="background:var(--sky)"></i></div>
+          <div class="split-leg"><span style="--c:var(--brass)" id="legSvc">Servicios</span><span style="--c:var(--sky)" id="legSub">Suscripciones</span></div>
+          <div class="out-rows">
+            <div><span>Leads al mes</span><b class="num" id="oLeads">0</b></div>
+            <div><span>Clientes nuevos al mes</span><b class="num" id="oClients">0</b></div>
+            <div><span>Leads al año que hoy se pierden</span><b class="num" id="oLost">0</b></div>
+            <div><span>Clientes en cartera al año</span><b class="num" id="oPort">0</b></div>
+          </div>
         </div>
       </div>
-    </section>
-  </div>
-  <footer><div class="wrap">LLAVE es la marca blanca de tecnología de GL Tax Solutions para socios Realtor y brokerage.</div></footer>
-</div>
+    </div>
+  </section>
 
-<!-- DASHBOARD -->
-<div class="view" id="view-dashboard">
-  <div class="dash">
-    <aside class="dside">
-      <h4>Clientes en seguimiento</h4>
-      <div id="leadList"></div>
-    </aside>
-    <main class="dmain" id="dmain"></main>
-  </div>
-</div>
+  <!-- ALIANZA -->
+  <section class="block" id="alianza">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">La alianza</span>
+        <h2>Cada parte trae algo que la otra no tiene.</h2>
+        <p>La tecnología permite atender muchos más clientes sin abrir una oficina física por cada etapa de crecimiento.</p>
+      </div>
+      <div class="ally">
+        <div class="side gl"><span class="mono">GL Tax Solutions aporta</span><h3>Operación y producto</h3>
+          <ul><li>Experiencia fiscal</li><li>Clientes y procesos</li><li>Marca</li><li>Conocimiento del mercado</li><li>La idea y la tecnología de la plataforma</li></ul></div>
+        <div class="plus" aria-hidden="true">+</div>
+        <div class="side rt"><span class="mono">Socios Realtors aportan</span><h3>Distribución y crecimiento</h3>
+          <ul><li>Capital</li><li>Relaciones con Realtors</li><li>Acceso a brokerages</li><li>Marketing</li><li>Expansión</li></ul></div>
+      </div>
+      <div class="rules">
+        <div class="rule"><span class="mono">Principio 1</span><p>Primero se valora lo que aporta cada parte. Después se habla de porcentajes.</p></div>
+        <div class="rule"><span class="mono">Principio 2</span><p>La tecnología y los procesos que ya son de GL Tax Solutions siguen siendo de GL Tax.</p></div>
+        <div class="rule"><span class="mono">Principio 3</span><p>La plataforma conjunta como entidad separada, con un contrato que diga qué pertenece a quién.</p></div>
+      </div>
+    </div>
+  </section>
 
-<div class="toast" id="toast"></div>
+  <section class="close">
+    <div class="wrap">
+      <span class="kicker">En una frase</span>
+      <h2 style="margin-top:18px">El Realtor deja de perder leads. <span class="hl">Nosotros los convertimos en compradores.</span></h2>
+      <p>LLAVE convierte a los clientes que hoy “no califican” en una cartera organizada de futuros compradores, y genera ingresos durante todo el proceso.</p>
+      <div class="hero-cta"><a class="btn btn-primary" href="#demo">Volver a la demo</a><a class="btn btn-ghost" href="#negocio">Ajustar los números</a></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>LLAVE · Powered by GL Tax Solutions</span><span>Prototipo de demostración. Nombres y cifras de ejemplo.</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
-/* ---- growth chart + stat count-up on load ---- */
-window.addEventListener('load', ()=>{
-  const area=document.getElementById('areaPath'), line=document.getElementById('linePath');
-  const len=line.getTotalLength();
-  line.style.strokeDasharray=len; line.style.strokeDashoffset=len;
-  line.getBoundingClientRect();
-  line.style.transition='stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)';
-  line.style.strokeDashoffset=0;
-  area.style.transition='opacity 1s ease .5s'; area.style.opacity=1;
-  countUp('statLeads',0,500,900,v=>Math.round(v)+'+');
-  countUp('statScore',0,92,900,v=>Math.round(v)+'%');
-  document.querySelectorAll('.bar-fill').forEach((el,i)=>{
-    setTimeout(()=>{ el.style.width = el.dataset.w+'%'; }, 200+i*150);
-  });
+(function(){
+const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => '$' + Math.round(n).toLocaleString('en-US');
+const fmt = n => Math.round(n).toLocaleString('en-US');
+
+/* ---------- HERO LIVE CARD ---------- */
+const LIVE = [
+  {s:28, d:'Día 1',   pill:['warn','En preparación'], note:'Carlos lo envió desde su enlace de LLAVE. Le interesa una casa de $340K.'},
+  {s:34, d:'Día 2',   pill:['warn','En preparación'], note:'Diagnóstico: taxes 2023 sin declarar, crédito 598, ingresos 1099.'},
+  {s:61, d:'Día 45',  pill:['warn','En preparación'], note:'Taxes presentados por GL Tax. Credit repair en curso con especialista.'},
+  {s:79, d:'Día 90',  pill:['sky','Casi listo'],      note:'Recordatorio automático enviado. Su crédito subió 46 puntos.'},
+  {s:91, d:'Día 120', pill:['ready','Listo para comprar'], note:'Listo para pre-aprobación. Regresa a Carlos para cerrar la compra.'}
+];
+let li = 0;
+function paintLive(i){
+  const x = LIVE[i];
+  $('#liveScore').textContent = x.s; $('#liveMeter').style.width = x.s + '%';
+  $('#liveDay').textContent = x.d; $('#liveNote').textContent = x.note;
+  const p = $('#livePill'); p.className = 'pill ' + x.pill[0]; p.textContent = x.pill[1];
+  [...$('#liveTrack').children].forEach((el,k)=>{ el.className = k < i ? 'done' : (k === i ? (i===4?'done':'on') : ''); });
+}
+if (RM) paintLive(4); else { paintLive(0); setInterval(()=>{ li = (li+1) % LIVE.length; paintLive(li); }, 2600); }
+
+/* ---------- DATA ---------- */
+const CAT = {
+  taxes:{n:'Preparación / corrección de taxes', who:'GL Tax · interno', w:25, short:'Taxes'},
+  credit:{n:'Credit repair', who:'Especialista aliado', w:25, short:'Crédito'},
+  books:{n:'Bookkeeping self-employed', who:'GL Tax · interno', w:12, short:'Bookkeeping'},
+  plan:{n:'Tax planning', who:'GL Tax · interno', w:6, short:'Planning'},
+  docs:{n:'Organización de ingresos y documentos', who:'GL Tax · interno', w:10, short:'Docs'},
+  debt:{n:'Plan de reducción de deudas', who:'Coach aliado', w:15, short:'Deudas'},
+  ready:{n:'Homebuyer Readiness', who:'Coach aliado', w:5, short:'Readiness'}
+};
+const NOTE = {pending:'Sin iniciar', progress:'En proceso', done:'Completado'};
+const sv = (k,s,n) => ({k, s, n: n || NOTE[s]});
+let uid = 100;
+const leads = [
+  {id:1, name:'Marisol Duarte', realtor:'Ana Pérez · Keller Williams', sv:[sv('taxes','progress','Faltan 2 declaraciones por corregir'), sv('credit','progress','3 cuentas en disputa'), sv('books','pending'), sv('plan','pending'), sv('docs','done','Ingresos cargados')]},
+  {id:2, name:'Jonathan Reyes', realtor:'Carlos Méndez · RE/MAX', sv:[sv('taxes','done'), sv('plan','done','Estrategia entregada'), sv('credit','progress','Score subió 42 puntos'), sv('ready','pending')]},
+  {id:3, name:'Elena Vargas', realtor:'Ana Pérez · Keller Williams', sv:[sv('docs','pending','Primera llamada agendada'), sv('taxes','pending'), sv('credit','pending')]},
+  {id:4, name:'Pedro Salinas', realtor:'Luis Fuentes · Coldwell Banker', sv:[sv('taxes','done'), sv('books','done','Al día, 3 meses seguidos'), sv('ready','done')]},
+  {id:5, name:'Karla Mendoza', realtor:'Luis Fuentes · Coldwell Banker', sv:[sv('credit','progress'), sv('debt','progress','Pagó 2 tarjetas'), sv('ready','pending')]},
+  {id:6, name:'Andrés Castillo', realtor:'Carlos Méndez · RE/MAX', sv:[sv('taxes','pending'), sv('books','pending'), sv('plan','pending'), sv('docs','progress','Subió 1099 de 2024')]},
+  {id:7, name:'Yesenia Ruiz', realtor:'Ana Pérez · Keller Williams', sv:[sv('taxes','done'), sv('docs','done'), sv('ready','progress','Taller completado')]},
+  {id:8, name:'Luis Ortega', realtor:'Sofía Blanco · eXp Realty', sv:[sv('credit','pending'), sv('debt','pending'), sv('ready','pending')]},
+  {id:9, name:'Roberto Gil', realtor:'Sofía Blanco · eXp Realty', isNew:true, sv:[sv('taxes','pending'), sv('docs','pending')]}
+];
+let activeId = 2, day = 0;
+const log = [
+  {d:'HOY', t:'Roberto Gil fue referido por Sofía Blanco'},
+  {d:'HOY', t:'Pedro Salinas está listo: se notificó a Luis Fuentes', win:true},
+  {d:'AYER', t:'14 recordatorios automáticos enviados (SMS + correo)'}
+];
+
+const first = l => l.name.split(' ')[0];
+const rShort = l => l.realtor.split(' · ')[0];
+function score(l){ let s = 100; l.sv.forEach(x=>{ const w = CAT[x.k].w; if(x.s==='pending') s-=w; else if(x.s==='progress') s-=w/2; }); return Math.max(5, Math.round(s)); }
+function stage(l){ if(l.isNew) return 'new'; const s = score(l); return s>=85 ? 'ready' : s>=65 ? 'almost' : 'prep'; }
+const scol = s => s>=85 ? 'var(--ready)' : s>=65 ? 'var(--sky)' : s>=45 ? 'var(--warn)' : 'var(--dim)';
+const STAGES = [
+  {k:'new', n:'Recién referidos', c:'var(--sky)'},
+  {k:'prep', n:'En preparación', c:'var(--warn)'},
+  {k:'almost', n:'Casi listos', c:'var(--brass)'},
+  {k:'ready', n:'Listos para comprar', c:'var(--ready)'}
+];
+const stagePill = st => ({new:['sky','Recién referido'], prep:['warn','En preparación'], almost:['sky','Casi listo'], ready:['ready','Listo para comprar']}[st]);
+
+/* ---------- TABS ---------- */
+function showPane(p){
+  document.querySelectorAll('.app-tab').forEach(t=>t.classList.toggle('active', t.dataset.pane===p));
+  ['refer','pipe','file'].forEach(k=>{ $('#pane-'+k).hidden = k!==p; });
+  $('#urlPath').textContent = {refer:'referir', pipe:'pipeline', file:'clientes/' + activeId}[p];
+  if(p==='pipe') renderPipe();
+  if(p==='file') renderFile();
+}
+document.querySelectorAll('.app-tab').forEach(t=>t.addEventListener('click',()=>showPane(t.dataset.pane)));
+
+/* ---------- REFER ---------- */
+const SIT = {taxes:['taxes'], credit:['credit'], self:['books','plan'], docs:['docs'], debt:['debt'], ready:['ready']};
+$('#referForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = $('#fName').value.trim();
+  const ks = [...document.querySelectorAll('#referForm input[type=checkbox]:checked')].map(i=>i.dataset.k);
+  if(!name){ $('#formErr').textContent = 'Escribe el nombre del prospecto.'; $('#fName').focus(); return; }
+  if(!ks.length){ $('#formErr').textContent = 'Marca al menos una situación para armar el plan.'; return; }
+  $('#formErr').textContent = '';
+  const keys = [...new Set(ks.flatMap(k=>SIT[k]))];
+  const lead = {id: ++uid, name, realtor: $('#fRealtor').value, isNew:true, fresh:true, sv: keys.map(k=>sv(k,'pending'))};
+  leads.unshift(lead); activeId = lead.id;
+  log.unshift({d: day ? 'DÍA '+day : 'HOY', t: `${name} fue referido por ${rShort(lead)}`});
+  runDiag(lead);
 });
-function countUp(id,from,to,dur,fmt){
-  const el=document.getElementById(id); const t0=performance.now();
-  function tick(t){ const p=Math.min(1,(t-t0)/dur); const v=from+(to-from)*(1-Math.pow(1-p,3));
-    el.textContent=fmt(v); if(p<1) requestAnimationFrame(tick); }
-  requestAnimationFrame(tick);
+function runDiag(l){
+  const steps = ['Revisando situación fiscal', 'Evaluando crédito y deudas', 'Verificando ingresos y documentos', 'Asignando especialistas'];
+  $('#diag').innerHTML = `<div class="mono" style="color:var(--brass);margin-bottom:12px">Diagnóstico en curso</div><div class="scan">${steps.map(s=>`<div>${s}</div>`).join('')}</div>`;
+  const rows = [...document.querySelectorAll('#diag .scan div')];
+  const dt = RM ? 0 : 380;
+  rows.forEach((r,i)=>setTimeout(()=>r.classList.add('on'), dt*(i+1)));
+  setTimeout(()=>showPlan(l), dt*(rows.length+1) + (RM?0:150));
+}
+function showPlan(l){
+  const s = score(l);
+  const weeks = Math.max(...l.sv.map(x=>({taxes:6,credit:20,books:12,plan:4,docs:3,debt:16,ready:6}[x.k])));
+  $('#diag').innerHTML = `
+    <div class="plan-top">
+      <div><span class="pill ready" style="margin-bottom:10px">Plan generado</span><h4>${esc(l.name)}</h4><p>Referido por ${esc(l.realtor)}</p></div>
+      <div class="plan-score"><div class="mono" style="color:var(--dim)">Readiness hoy</div><b class="num" style="color:${scol(s)}">${s}</b></div>
+    </div>
+    <div class="meter"><i style="width:${s}%"></i></div>
+    <div class="plan-list">
+      ${l.sv.map((x,i)=>`<div class="plan-item" style="animation-delay:${RM?0:i*90}ms"><span class="dot"></span><div><b>${CAT[x.k].n}</b><span>${CAT[x.k].who}</span></div><span class="pill dim">+${CAT[x.k].w} pts</span></div>`).join('')}
+      <div class="plan-item" style="animation-delay:${RM?0:l.sv.length*90}ms"><span class="dot" style="background:var(--ready)"></span><div><b>Seguimiento automático activado</b><span>SMS y correo al cliente, reporte semanal a ${esc(rShort(l))}</span></div></div>
+    </div>
+    <div class="plan-foot">
+      <p>Tiempo estimado para estar listo: <b style="color:var(--text)">~${Math.round(weeks/4)} meses</b>. El Realtor recibe una notificación cuando llegue a 85.</p>
+      <button class="btn btn-primary btn-sm" id="goPipe">Ver en el pipeline</button>
+      <button class="btn btn-ghost btn-sm" id="goFile">Abrir expediente</button>
+    </div>`;
+  $('#goPipe').onclick = ()=>showPane('pipe');
+  $('#goFile').onclick = ()=>showPane('file');
+  toast(`${first(l)} ya está en seguimiento. ${rShort(l)} verá su progreso.`);
 }
 
-/* ---- dashboard data ---- */
-const leads = [
-  { id:1, name:"Marisol Duarte", realtor:"Ana P. — Keller Williams", score:35,
-    services:[
-      {name:"Preparación de taxes 2024–2025", note:"Faltan 2 declaraciones por corregir", status:"progress"},
-      {name:"Credit repair", note:"3 cuentas en disputa activa", status:"progress"},
-      {name:"Bookkeeping (self-employed)", note:"Sin iniciar", status:"pending"},
-      {name:"Organización de documentos", note:"Ingresos ya cargados", status:"done"},
-    ]},
-  { id:2, name:"Jonathan Reyes", realtor:"Carlos M. — RE/MAX", score:78,
-    services:[
-      {name:"Preparación de taxes", note:"Completado", status:"done"},
-      {name:"Tax planning", note:"Estrategia entregada", status:"done"},
-      {name:"Credit repair", note:"Score subió 42 puntos", status:"progress"},
-      {name:"Homebuyer readiness", note:"Falta carta de pre-aprobación", status:"pending"},
-    ]},
-  { id:3, name:"Elena Vargas", realtor:"Ana P. — Keller Williams", score:15,
-    services:[
-      {name:"Organización de ingresos", note:"Primera llamada agendada", status:"pending"},
-      {name:"Preparación de taxes", note:"Sin iniciar", status:"pending"},
-      {name:"Credit repair", note:"Sin iniciar", status:"pending"},
-    ]},
-  { id:4, name:"Pedro Salinas", realtor:"Luis F. — Coldwell Banker", score:92,
-    services:[
-      {name:"Preparación de taxes", note:"Completado", status:"done"},
-      {name:"Bookkeeping", note:"Al día, 3 meses seguidos", status:"done"},
-      {name:"Homebuyer readiness", note:"Listo — pendiente de agendar cierre", status:"done"},
-    ]},
-];
-let activeId = 1;
-function ringSvg(score){
-  const r=44, c=2*Math.PI*r, off=c*(1-score/100);
-  const col = score>=70?'var(--teal)': score>=40?'var(--amber)':'var(--muted2)';
-  return `<svg width="104" height="104" viewBox="0 0 104 104">
-    <circle cx="52" cy="52" r="${r}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
-    <circle cx="52" cy="52" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round"
-      stroke-dasharray="${c}" stroke-dashoffset="${off}" style="transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)"/>
-  </svg>`;
+/* ---------- PIPELINE ---------- */
+function renderPipe(){
+  const scores = leads.map(score);
+  const ready = leads.filter(l=>stage(l)==='ready').length;
+  $('#kActive').textContent = leads.length - ready;
+  $('#kReady').textContent = ready;
+  $('#kAvg').textContent = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  $('#kSvc').textContent = leads.reduce((a,l)=>a + l.sv.filter(x=>x.s!=='done').length, 0);
+  $('#kb').innerHTML = STAGES.map(st=>{
+    const items = leads.filter(l=>stage(l)===st.k);
+    return `<div class="col ${st.k==='ready'?'ready':''}" style="--c:${st.c}">
+      <div class="col-h"><b>${st.n}</b><span>${items.length}</span></div>
+      ${items.map(l=>{ const s = score(l); return `<button class="lcard ${l.fresh?'flash':''}" data-id="${l.id}">
+        <div class="top"><b>${esc(l.name)}</b><span class="sc" style="color:${scol(s)}">${s}</span></div>
+        <div class="rl">${esc(l.realtor)}</div>
+        <div class="bar"><i style="width:${s}%;background:${scol(s)}"></i></div>
+        <div class="chips">${l.sv.map(x=>`<span class="chip ${x.s}">${CAT[x.k].short}</span>`).join('')}</div>
+      </button>`; }).join('')}
+    </div>`;
+  }).join('');
+  leads.forEach(l=>l.fresh=false);
+  $('#dayLbl').textContent = day ? 'DÍA ' + day : 'HOY';
+  $('#log').innerHTML = log.slice(0,14).map(e=>`<li class="${e.win?'win':''}"><span>${e.d}</span>${esc(e.t)}</li>`).join('');
 }
-function renderList(){
-  document.getElementById('leadList').innerHTML = leads.map(l=>`
-    <div class="lead-item ${l.id===activeId?'active':''}" onclick="selectLead(${l.id})">
-      <div><div class="lead-name">${l.name}</div><div class="lead-realtor">${l.realtor}</div></div>
-      <div style="font-family:'Fraunces',serif;font-size:14px;color:${l.score>=70?'var(--teal)':l.score>=40?'var(--amber)':'var(--muted2)'}">${l.score}%</div>
-    </div>`).join('');
+$('#kb').addEventListener('click', e=>{ const c = e.target.closest('.lcard'); if(!c) return; activeId = +c.dataset.id; showPane('file'); });
+$('#simBtn').addEventListener('click', ()=>{
+  day += 30; const d = 'DÍA ' + day; const ev = []; let reminders = 0, wins = 0;
+  leads.forEach(l=>{
+    const before = stage(l);
+    if(before==='ready') return;
+    reminders += 1 + l.sv.filter(x=>x.s!=='done').length;
+    if(l.isNew){ l.isNew = false; l.fresh = true; l.sv.forEach(x=>{ if(x.s==='pending'){ x.s='progress'; x.n='En proceso'; } }); ev.push({d, t:`Diagnóstico listo: ${l.name} empezó ${l.sv.length} servicios`}); return; }
+    let steps = 2;
+    for(const x of l.sv){ if(steps<=0) break; if(x.s==='progress'){ x.s='done'; x.n='Completado'; steps--; ev.push({d, t:`${CAT[x.k].short} de ${first(l)}: completado`}); } }
+    for(const x of l.sv){ if(steps<=0) break; if(x.s==='pending'){ x.s='progress'; x.n='En proceso'; steps--; } }
+    l.fresh = true;
+    if(stage(l)==='ready'){ wins++; ev.push({d, t:`${l.name} está listo para comprar. Regresa a ${rShort(l)}`, win:true}); }
+  });
+  ev.push({d, t:`${reminders} recordatorios automáticos enviados (SMS + correo)`});
+  log.unshift(...ev.reverse());
+  renderPipe();
+  toast(wins ? `${wins} cliente${wins>1?'s':''} listo${wins>1?'s':''} para comprar este mes.` : `Día ${day}: la cartera sigue avanzando.`);
+});
+
+/* ---------- FILE ---------- */
+function ring(s){
+  const r = 50, c = 2*Math.PI*r, off = c*(1 - s/100);
+  return `<svg width="118" height="118" viewBox="0 0 118 118"><circle cx="59" cy="59" r="${r}" fill="none" stroke="var(--surface3)" stroke-width="10"/><circle cx="59" cy="59" r="${r}" fill="none" stroke="${scol(s)}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" style="transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)"/></svg>`;
 }
-function renderMain(){
-  const l = leads.find(x=>x.id===activeId);
-  const done = l.services.filter(s=>s.status==='done').length;
-  document.getElementById('dmain').innerHTML = `
-    <div class="dhead">
-      <div><h2>${l.name}</h2><p>Referido por ${l.realtor} · ${done}/${l.services.length} servicios completados</p></div>
-      <div class="ringwrap">${ringSvg(l.score)}<div class="rv"><b>${l.score}%</b><span>READINESS</span></div></div>
+function realtorMsg(l){
+  const s = score(l), st = stage(l);
+  const left = l.sv.filter(x=>x.s!=='done').map(x=>CAT[x.k].short.toLowerCase());
+  if(st==='ready') return `Hola ${rShort(l).split(' ')[0]}, <b>${esc(l.name)}</b> está listo para comprar (readiness ${s}/100). Ya puedes agendar su pre-aprobación.`;
+  return `Hola ${rShort(l).split(' ')[0]}, <b>${esc(first(l))}</b> va en ${s}/100. Le falta: ${esc(left.join(', '))}. Te avisamos en cuanto llegue a 85.`;
+}
+function renderFile(){
+  const l = leads.find(x=>x.id===activeId) || leads[0]; activeId = l.id;
+  $('#urlPath').textContent = 'clientes/' + l.id;
+  $('#flist').innerHTML = `<div class="mono" style="color:var(--dim);padding:0 12px 8px">Clientes</div>` + leads.map(x=>{ const s = score(x); return `<button class="fitem ${x.id===l.id?'active':''}" data-id="${x.id}"><div><b>${esc(x.name)}</b><span>${esc(rShort(x))}</span></div><span class="sc" style="color:${scol(s)}">${s}</span></button>`; }).join('');
+  const s = score(l), st = stagePill(stage(l)), done = l.sv.filter(x=>x.s==='done').length;
+  const nextSvc = l.sv.find(x=>x.s!=='done');
+  $('#fmain').innerHTML = `
+    <div class="fhead">
+      <div><span class="pill ${st[0]}">${st[1]}</span><h3 style="margin-top:10px">${esc(l.name)}</h3><p>Referido por ${esc(l.realtor)} · ${done} de ${l.sv.length} servicios completados</p></div>
+      <div class="ring">${ring(s)}<div class="rv"><b class="num">${s}</b><span>READINESS</span></div></div>
     </div>
-    <div class="checklist">
-      ${l.services.map((s,i)=>`
-        <div class="chk">
-          <div class="chk-box ${s.status}" onclick="toggleStatus(${i})">${s.status==='done'?'✓':(s.status==='progress'?'•':'')}</div>
-          <div class="chk-body"><b>${s.name}</b><p>${s.note}</p></div>
-          <div class="chk-tag ${s.status}">${s.status==='done'?'Completado':s.status==='progress'?'En proceso':'Pendiente'}</div>
-        </div>`).join('')}
-    </div>
-    <div class="actrow">
-      <button class="btn" onclick="notify('Recordatorio enviado a ${l.name.split(' ')[0]} por SMS y correo.')">Enviar recordatorio</button>
-      <button class="btn ghost" onclick="notify('${l.name.split(' ')[0]} fue notificado a ${l.realtor.split(' — ')[0]}.')">Notificar al Realtor</button>
+    <div class="fgrid">
+      <div>
+        <div class="hint">Toca la casilla para cambiar el estado y mira cómo se mueve el score.</div>
+        ${l.sv.map((x,i)=>`<div class="svc"><button class="box ${x.s}" data-i="${i}" aria-label="Cambiar estado de ${CAT[x.k].n}">${x.s==='done'?'✓':x.s==='progress'?'•':''}</button><div class="bd"><b>${CAT[x.k].n}</b><span>${esc(x.n)} · ${CAT[x.k].who}</span></div><span class="pill ${x.s==='done'?'ready':x.s==='progress'?'warn':'dim'}">${NOTE[x.s]}</span></div>`).join('')}
+        <div class="factions">
+          <button class="btn btn-primary btn-sm" data-act="remind">Enviar recordatorio al cliente</button>
+          <button class="btn btn-ghost btn-sm" data-act="realtor">Enviar avance al Realtor</button>
+        </div>
+      </div>
+      <div>
+        <div class="rview"><span class="mono">Lo que recibe el Realtor</span><p class="msg">${realtorMsg(l)}</p></div>
+        <div class="auto panel" style="padding:16px">
+          <span class="mono" style="color:var(--dim)">Seguimiento automático</span>
+          <ul>
+            ${stage(l)==='ready'
+              ? `<li><b>Hoy</b>Aviso al Realtor: cliente listo para pre-aprobación</li><li><b>En 7 días</b>Encuesta de cierre y solicitud de referidos</li>`
+              : `<li><b>Mañana</b>SMS a ${esc(first(l))}: ${nextSvc ? esc(CAT[nextSvc.k].short.toLowerCase()) + ' pendiente' : 'revisión final'}</li><li><b>Cada lunes</b>Reporte de avance a ${esc(rShort(l))}</li><li><b>Al llegar a 85</b>El cliente regresa al Realtor para cerrar</li>`}
+          </ul>
+        </div>
+      </div>
     </div>`;
 }
-function selectLead(id){ activeId=id; renderList(); renderMain(); }
-function toggleStatus(i){
+$('#flist').addEventListener('click', e=>{ const b = e.target.closest('.fitem'); if(!b) return; activeId = +b.dataset.id; renderFile(); });
+$('#fmain').addEventListener('click', e=>{
   const l = leads.find(x=>x.id===activeId);
-  const order = {pending:'progress', progress:'done', done:'pending'};
-  l.services[i].status = order[l.services[i].status];
-  l.score = Math.round(l.services.filter(s=>s.status==='done').length / l.services.length * 100);
-  renderList(); renderMain();
-}
-function notify(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2600);
-}
-renderList(); renderMain();
-
-document.querySelectorAll('[data-view]').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const v = btn.getAttribute('data-view');
-    document.querySelectorAll('.tab[data-view]').forEach(t=>t.classList.toggle('active', t.getAttribute('data-view')===v));
-    document.getElementById('view-landing').classList.toggle('active', v==='landing');
-    document.getElementById('view-dashboard').classList.toggle('active', v==='dashboard');
-    window.scrollTo(0,0);
-  });
+  const box = e.target.closest('button.box');
+  if(box){
+    const x = l.sv[+box.dataset.i]; const was = stage(l);
+    x.s = {pending:'progress', progress:'done', done:'pending'}[x.s]; x.n = NOTE[x.s]; l.isNew = false;
+    renderFile();
+    if(was!=='ready' && stage(l)==='ready'){ log.unshift({d: day?'DÍA '+day:'HOY', t:`${l.name} está listo para comprar. Regresa a ${rShort(l)}`, win:true}); toast(`${first(l)} está listo. Se notificó a ${rShort(l)}.`); }
+    return;
+  }
+  const a = e.target.closest('[data-act]');
+  if(a) toast(a.dataset.act==='remind' ? `Recordatorio enviado a ${first(l)} por SMS y correo.` : `Avance enviado a ${rShort(l)}.`);
 });
+
+/* ---------- CALCULATOR ---------- */
+const C = {R:$('#cR'), L:$('#cL'), C:$('#cC'), T:$('#cT'), S:$('#cS')};
+function calc(){
+  Object.values(C).forEach(i=>{ i.style.setProperty('--p', ((i.value - i.min)/(i.max - i.min)*100) + '%'); });
+  const R=+C.R.value, L=+C.L.value, cv=+C.C.value/100, T=+C.T.value, S=+C.S.value;
+  $('#oR').textContent = R; $('#oL').textContent = L; $('#oC').textContent = Math.round(cv*100)+'%'; $('#oT').textContent = money(T); $('#oS').textContent = money(S);
+  const leadsM = R*L, clients = leadsM*cv, svc = clients*T, sub = R*S, month = svc+sub;
+  $('#oYear').textContent = money(month*12);
+  $('#oMonth').textContent = money(month) + ' al mes';
+  $('#oLeads').textContent = fmt(leadsM); $('#oClients').textContent = fmt(clients);
+  $('#oLost').textContent = fmt(leadsM*12); $('#oPort').textContent = fmt(clients*12);
+  const pS = month ? svc/month*100 : 0;
+  $('#barSvc').style.width = pS + '%'; $('#barSub').style.width = (100-pS) + '%';
+  $('#legSvc').textContent = 'Servicios ' + money(svc*12) + '/año'; $('#legSub').textContent = 'Suscripciones ' + money(sub*12) + '/año';
+  document.querySelectorAll('.preset').forEach(p=>p.classList.toggle('active', +p.dataset.r===R && L===5));
+}
+Object.values(C).forEach(i=>i.addEventListener('input', calc));
+$('#presets').addEventListener('click', e=>{ const p = e.target.closest('.preset'); if(!p) return; C.R.value = p.dataset.r; C.L.value = 5; calc(); });
+
+/* ---------- TOAST ---------- */
+let tt;
+function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(()=>t.classList.remove('show'), 2800); }
+
+calc(); renderPipe(); renderFile(); showPane('refer');
+})();
 </script>
+
 </body>
 </html>
