@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LLAVE — Powered by GL Tax Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0E13; --bg2:#0D131A; --surface:#131A22; --surface2:#1A232D;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --gold:#E8B94D; --gold2:#F6D67F; --teal:#33E2B4; --teal-dim:rgba(51,226,180,.14);
+  --amber:#E09A4E; --text:#F3F6F8; --muted:#8E9BA8; --muted2:#57646F;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); box-sizing:border-box;
+}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(circle at 12% 8%, rgba(232,185,77,.07), transparent 40%),
+  radial-gradient(circle at 88% 18%, rgba(51,226,180,.06), transparent 42%);
+  pointer-events:none;z-index:0;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;margin:0;letter-spacing:-0.01em;}
+p{margin:0;color:var(--muted);}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+.grad-text{background:linear-gradient(100deg,var(--gold2),var(--gold) 55%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:30;background:rgba(10,14,19,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);}
+.navrow{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1160px;margin:0 auto;}
+.brand{display:flex;align-items:baseline;gap:9px;font-family:'Fraunces',serif;font-size:20px;}
+.brand span.k{color:var(--gold);}
+.brand small{font-family:'Inter';font-size:10.5px;color:var(--muted2);font-weight:600;letter-spacing:.03em;}
+.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px;}
+.tab{border:none;background:transparent;color:var(--muted);font-family:'Inter';font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:7px;cursor:pointer;}
+.tab.active{background:var(--gold);color:#221701;}
+
+.view{display:none;} .view.active{display:block;}
+
+/* HERO */
+.hero{padding:76px 0 20px;}
+.eyebrow{color:var(--teal);font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-dim);}
+.hero h1{font-size:52px;line-height:1.06;max-width:15ch;}
+.hero p.lead{margin-top:20px;font-size:17.5px;max-width:52ch;}
+.stat-row{display:flex;gap:38px;margin-top:38px;flex-wrap:wrap;}
+.stat b{font-family:'Fraunces',serif;font-size:34px;color:var(--text);display:block;}
+.stat span{font-size:12.5px;color:var(--muted2);}
+.cta-row{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;}
+.btn{background:linear-gradient(100deg,var(--gold),var(--gold2));color:#221701;border:none;border-radius:10px;padding:14px 24px;font-weight:700;font-size:14.5px;cursor:pointer;white-space:nowrap;}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--text);}
+
+/* CHART PANEL */
+.chart-panel{margin-top:52px;background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:20px;padding:32px 32px 12px;overflow:hidden;}
+.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
+.chart-head h3{font-size:18px;color:var(--text);}
+.chart-head p{font-size:12.5px;margin-top:4px;}
+.legend{display:flex;gap:18px;font-size:12px;color:var(--muted);}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+#growthChart{width:100%;height:auto;display:block;}
+.chart-x{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted2);padding:6px 4px 18px;}
+
+/* STEPPER */
+.stepper{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:56px;}
+.step{position:relative;padding:0 14px 0 0;}
+.step .num{font-family:'Fraunces',serif;font-size:15px;color:var(--gold);border:1px solid var(--line2);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--bg2);}
+.step:not(:last-child)::after{content:'';position:absolute;top:17px;left:34px;right:0;height:1px;background:linear-gradient(90deg,var(--line2),transparent);}
+.step b{font-size:14px;color:var(--text);display:block;margin-bottom:5px;}
+.step p{font-size:12.5px;}
+
+/* SECTION */
+.section{padding:64px 0;border-top:1px solid var(--line);}
+.section-head{max-width:62ch;margin-bottom:38px;}
+.section-head .eyebrow{margin-bottom:10px;}
+.section-head h2{font-size:31px;}
+.section-head p{margin-top:10px;font-size:15px;}
+
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.svc-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;}
+.svc-ic{width:36px;height:36px;border-radius:9px;background:var(--teal-dim);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:16px;}
+.svc-card b{font-size:14.5px;color:var(--text);display:block;margin-bottom:5px;}
+.svc-card p{font-size:12.5px;}
+.svc-card .tag{display:inline-block;margin-top:10px;font-size:10.5px;color:var(--muted2);border:1px solid var(--line);border-radius:100px;padding:3px 10px;}
+
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;}
+.card h3{font-size:16px;color:var(--text);margin-bottom:8px;}
+.card p{font-size:13.5px;}
+.card .n{color:var(--gold);font-family:'Fraunces',serif;font-size:26px;display:block;margin-bottom:12px;}
+
+/* BAR CHART */
+.barchart{margin-top:10px;}
+.bar-row{display:grid;grid-template-columns:120px 1fr 90px;align-items:center;gap:16px;padding:14px 0;}
+.bar-row .lbl{font-size:13.5px;color:var(--text);}
+.bar-track{height:12px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--line);}
+.bar-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
+.bar-row .val{font-family:'Fraunces',serif;font-size:17px;color:var(--teal);text-align:right;}
+
+.cta-band{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:20px;padding:44px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden;}
+.cta-band h3{font-size:23px;max-width:30ch;color:var(--text);}
+footer{padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:12.5px;color:var(--muted2);}
+
+/* DASHBOARD */
+.dash{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 65px);position:relative;z-index:1;}
+.dside{border-right:1px solid var(--line);padding:22px 16px;background:var(--bg2);}
+.dside h4{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted2);font-weight:700;padding:0 8px 10px;}
+.lead-item{display:flex;justify-content:space-between;align-items:center;padding:11px 10px;border-radius:10px;cursor:pointer;margin-bottom:3px;}
+.lead-item:hover{background:var(--surface);}
+.lead-item.active{background:var(--surface2);border:1px solid var(--line2);}
+.lead-name{font-size:13.5px;color:var(--text);font-weight:500;}
+.lead-realtor{font-size:11px;color:var(--muted2);margin-top:1px;}
+
+.dmain{padding:32px 36px;overflow-x:auto;}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:18px;}
+.dhead h2{font-size:25px;}
+.dhead p{font-size:13px;margin-top:4px;}
+.ringwrap{position:relative;width:104px;height:104px;flex-shrink:0;}
+.ringwrap svg{transform:rotate(-90deg);}
+.ringwrap .rv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ringwrap .rv b{font-family:'Fraunces',serif;font-size:22px;color:var(--text);}
+.ringwrap .rv span{font-size:9px;color:var(--muted2);letter-spacing:.03em;}
+
+.checklist{display:flex;flex-direction:column;gap:10px;margin-top:6px;}
+.chk{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;}
+.chk-box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--muted2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;}
+.chk-box.done{background:var(--teal);border-color:var(--teal);color:#04231A;}
+.chk-box.progress{border-color:var(--amber);color:var(--amber);}
+.chk-body{flex:1;} .chk-body b{font-size:14.5px;color:var(--text);font-weight:600;} .chk-body p{font-size:12.5px;margin-top:2px;}
+.chk-tag{font-size:11px;padding:4px 10px;border-radius:100px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;}
+.chk-tag.done{color:var(--teal);border-color:var(--teal);} .chk-tag.progress{color:var(--amber);border-color:var(--amber);}
+.actrow{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--gold);color:var(--text);padding:12px 20px;border-radius:10px;font-size:13.5px;opacity:0;transition:.25s;pointer-events:none;z-index:50;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:860px){
+  .hero h1{font-size:34px;max-width:none;} .stepper{grid-template-columns:1fr 1fr;row-gap:26px;} .step:nth-child(2n)::after{display:none;}
+  .svc-grid,.cards3{grid-template-columns:1fr;}
+  .dash{grid-template-columns:1fr;} .dside{border-right:none;border-bottom:1px solid var(--line);}
+  .navrow{flex-direction:column;gap:12px;align-items:flex-start;}
+  .bar-row{grid-template-columns:90px 1fr 60px;gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <div class="brand"><span class="k">🔑</span>LLAVE <small>POWERED&nbsp;BY&nbsp;GL&nbsp;TAX&nbsp;SOLUTIONS</small></div>
+    <div class="tabs">
+      <button class="tab active" data-view="landing">Presentación</button>
+      <button class="tab" data-view="dashboard">Demo del sistema</button>
+    </div>
+  </div>
+</nav>
+
+<!-- LANDING -->
+<div class="view active" id="view-landing">
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">PARA REALTORS Y BROKERAGES</div>
+      <h1>Deja de perder al <span class="grad-text">comprador</span> que casi califica.</h1>
+      <p class="lead">Cuando un prospecto no está listo para comprar, LLAVE lo recibe, lo prepara con servicios fiscales y financieros, y te lo regresa listo para cerrar — sin que muevas un dedo.</p>
+      <div class="stat-row">
+        <div class="stat"><b id="statLeads">0</b><span>LEADS RECUPERABLES / MES A ESCALA</span></div>
+        <div class="stat"><b id="statScore">0%</b><span>READINESS SCORE PROMEDIO AL CIERRE</span></div>
+        <div class="stat"><b>24/7</b><span>SEGUIMIENTO AUTOMATIZADO</span></div>
+      </div>
+      <div class="cta-row">
+        <button class="btn tab" data-view="dashboard">Ver demo del sistema</button>
+        <button class="btn ghost">Agendar alianza</button>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-head">
+          <div>
+            <h3>Clientes recuperados por mes</h3>
+            <p>Prospectos que hoy se pierden vs. los que LLAVE regresa listos para comprar</p>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--muted2)"></i>Sin LLAVE</span>
+            <span><i style="background:var(--teal)"></i>Con LLAVE</span>
+          </div>
+        </div>
+        <svg id="growthChart" viewBox="0 0 760 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="fillTeal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#33E2B4" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#33E2B4" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="rgba(255,255,255,.06)">
+            <line x1="0" y1="20" x2="760" y2="20"/><line x1="0" y1="70" x2="760" y2="70"/>
+            <line x1="0" y1="120" x2="760" y2="120"/><line x1="0" y1="170" x2="760" y2="170"/>
+          </g>
+          <path d="M0,175 L127,168 L254,158 L381,148 L508,142 L634,136 L760,130" fill="none" stroke="var(--muted2)" stroke-width="2" stroke-dasharray="4 5"/>
+          <path id="areaPath" d="M0,175 L127,150 L254,118 L381,90 L508,58 L634,32 L760,14 L760,220 L0,220 Z" fill="url(#fillTeal)" opacity="0"/>
+          <path id="linePath" d="M0,175 L127,150 L254,118 L381,90 L508,58 L634,32 L760,14" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="chart-x"><span>Mes 1</span><span>Mes 2</span><span>Mes 3</span><span>Mes 4</span><span>Mes 5</span><span>Mes 6</span><span>Mes 7</span></div>
+      </div>
+
+      <div class="stepper">
+        <div class="step"><div class="num">1</div><b>Realtor identifica</b><p>Prospecto interesado que aún no califica.</p></div>
+        <div class="step"><div class="num">2</div><b>Lo envía a LLAVE</b><p>Un solo enlace, cero trabajo extra.</p></div>
+        <div class="step"><div class="num">3</div><b>Diagnóstico</b><p>La plataforma detecta qué le falta.</p></div>
+        <div class="step"><div class="num">4</div><b>Servicios + seguimiento</b><p>Red de especialistas + recordatorios.</p></div>
+        <div class="step"><div class="num">5</div><b>Regresa listo</b><p>Con readiness score, a cerrar la compra.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow" style="color:var(--gold)">EL SERVICIO</div>
+        <h2>Un solo lugar para todo lo que le falta al cliente</h2>
+        <p>Nosotros no operamos cada servicio — coordinamos una red de especialistas y mantenemos al cliente en movimiento hasta que esté listo para comprar.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card"><div class="svc-ic">◆</div><b>Preparación de taxes</b><p>Corrección y presentación de declaraciones atrasadas o incorrectas.</p><span class="tag">Interno</span></div>
+        <div class="svc-card"><div class="svc-ic">◇</div><b>Tax planning</b><p>Estrategia fiscal orientada a calificar para hipoteca.</p><span class="tag">Interno</span></div>
+        <div class="svc-card"><div class="svc-ic">▤</div><b>Organización de documentos</b><p>Ingresos y comprobantes listos para el prestamista.</p><span class="tag">Interno</span></div>
+        <div class="svc-card"><div class="svc-ic">✓</div><b>Credit repair</b><p>Disputa de cuentas y reconstrucción de historial.</p><span class="tag">Red de especialistas</span></div>
+        <div class="svc-card"><div class="svc-ic">▥</div><b>Bookkeeping self-employed</b><p>Contabilidad mensual para ingresos comprobables.</p><span class="tag">Red de especialistas</span></div>
+        <div class="svc-card"><div class="svc-ic">●</div><b>Homebuyer readiness</b><p>Seguimiento y recordatorios hasta estar listo.</p><span class="tag">Automatizado</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow" style="color:var(--gold)">EL MODELO</div>
+        <h2>Ingresos recurrentes, no un tax return suelto</h2>
+        <p>El mismo ecosistema genera varias fuentes de ingreso a la vez.</p>
+      </div>
+      <div class="cards3">
+        <div class="card"><span class="n">01</span><h3>Servicios al cliente</h3><p>Taxes, readiness, bookkeeping y planning — de forma recurrente, no solo una vez al año.</p></div>
+        <div class="card"><span class="n">02</span><h3>Suscripción de brokerage</h3><p>Realtors y brokerages pagan por acceso a la plataforma y al pipeline de leads recuperados.</p></div>
+        <div class="card"><span class="n">03</span><h3>Servicios adyacentes</h3><p>Mortgage y otros servicios de real estate, bajo la estructura legal correspondiente.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow" style="color:var(--gold)">LA ESCALA</div>
+        <h2>Crece con Realtors, no con oficinas</h2>
+        <p>Estimado a 5 prospectos por Realtor al mes.</p>
+      </div>
+      <div class="barchart" id="barchart">
+        <div class="bar-row"><span class="lbl">20 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="20"></div></div><span class="val">100</span></div>
+        <div class="bar-row"><span class="lbl">50 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="50"></div></div><span class="val">250</span></div>
+        <div class="bar-row"><span class="lbl">100 Realtors</span><div class="bar-track"><div class="bar-fill" data-w="100"></div></div><span class="val">500</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-band">
+        <h3>¿Listos para dejar de perder prospectos que casi califican?</h3>
+        <div style="display:flex;gap:10px;">
+          <button class="btn ghost tab" data-view="dashboard">Ver demo del sistema</button>
+          <button class="btn">Agendar alianza</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap">LLAVE es la marca blanca de tecnología de GL Tax Solutions para socios Realtor y brokerage.</div></footer>
+</div>
+
+<!-- DASHBOARD -->
+<div class="view" id="view-dashboard">
+  <div class="dash">
+    <aside class="dside">
+      <h4>Clientes en seguimiento</h4>
+      <div id="leadList"></div>
+    </aside>
+    <main class="dmain" id="dmain"></main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---- growth chart + stat count-up on load ---- */
+window.addEventListener('load', ()=>{
+  const area=document.getElementById('areaPath'), line=document.getElementById('linePath');
+  const len=line.getTotalLength();
+  line.style.strokeDasharray=len; line.style.strokeDashoffset=len;
+  line.getBoundingClientRect();
+  line.style.transition='stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)';
+  line.style.strokeDashoffset=0;
+  area.style.transition='opacity 1s ease .5s'; area.style.opacity=1;
+  countUp('statLeads',0,500,900,v=>Math.round(v)+'+');
+  countUp('statScore',0,92,900,v=>Math.round(v)+'%');
+  document.querySelectorAll('.bar-fill').forEach((el,i)=>{
+    setTimeout(()=>{ el.style.width = el.dataset.w+'%'; }, 200+i*150);
+  });
+});
+function countUp(id,from,to,dur,fmt){
+  const el=document.getElementById(id); const t0=performance.now();
+  function tick(t){ const p=Math.min(1,(t-t0)/dur); const v=from+(to-from)*(1-Math.pow(1-p,3));
+    el.textContent=fmt(v); if(p<1) requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+}
+
+/* ---- dashboard data ---- */
+const leads = [
+  { id:1, name:"Marisol Duarte", realtor:"Ana P. — Keller Williams", score:35,
+    services:[
+      {name:"Preparación de taxes 2024–2025", note:"Faltan 2 declaraciones por corregir", status:"progress"},
+      {name:"Credit repair", note:"3 cuentas en disputa activa", status:"progress"},
+      {name:"Bookkeeping (self-employed)", note:"Sin iniciar", status:"pending"},
+      {name:"Organización de documentos", note:"Ingresos ya cargados", status:"done"},
+    ]},
+  { id:2, name:"Jonathan Reyes", realtor:"Carlos M. — RE/MAX", score:78,
+    services:[
+      {name:"Preparación de taxes", note:"Completado", status:"done"},
+      {name:"Tax planning", note:"Estrategia entregada", status:"done"},
+      {name:"Credit repair", note:"Score subió 42 puntos", status:"progress"},
+      {name:"Homebuyer readiness", note:"Falta carta de pre-aprobación", status:"pending"},
+    ]},
+  { id:3, name:"Elena Vargas", realtor:"Ana P. — Keller Williams", score:15,
+    services:[
+      {name:"Organización de ingresos", note:"Primera llamada agendada", status:"pending"},
+      {name:"Preparación de taxes", note:"Sin iniciar", status:"pending"},
+      {name:"Credit repair", note:"Sin iniciar", status:"pending"},
+    ]},
+  { id:4, name:"Pedro Salinas", realtor:"Luis F. — Coldwell Banker", score:92,
+    services:[
+      {name:"Preparación de taxes", note:"Completado", status:"done"},
+      {name:"Bookkeeping", note:"Al día, 3 meses seguidos", status:"done"},
+      {name:"Homebuyer readiness", note:"Listo — pendiente de agendar cierre", status:"done"},
+    ]},
+];
+let activeId = 1;
+function ringSvg(score){
+  const r=44, c=2*Math.PI*r, off=c*(1-score/100);
+  const col = score>=70?'var(--teal)': score>=40?'var(--amber)':'var(--muted2)';
+  return `<svg width="104" height="104" viewBox="0 0 104 104">
+    <circle cx="52" cy="52" r="${r}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
+    <circle cx="52" cy="52" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round"
+      stroke-dasharray="${c}" stroke-dashoffset="${off}" style="transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)"/>
+  </svg>`;
+}
+function renderList(){
+  document.getElementById('leadList').innerHTML = leads.map(l=>`
+    <div class="lead-item ${l.id===activeId?'active':''}" onclick="selectLead(${l.id})">
+      <div><div class="lead-name">${l.name}</div><div class="lead-realtor">${l.realtor}</div></div>
+      <div style="font-family:'Fraunces',serif;font-size:14px;color:${l.score>=70?'var(--teal)':l.score>=40?'var(--amber)':'var(--muted2)'}">${l.score}%</div>
+    </div>`).join('');
+}
+function renderMain(){
+  const l = leads.find(x=>x.id===activeId);
+  const done = l.services.filter(s=>s.status==='done').length;
+  document.getElementById('dmain').innerHTML = `
+    <div class="dhead">
+      <div><h2>${l.name}</h2><p>Referido por ${l.realtor} · ${done}/${l.services.length} servicios completados</p></div>
+      <div class="ringwrap">${ringSvg(l.score)}<div class="rv"><b>${l.score}%</b><span>READINESS</span></div></div>
+    </div>
+    <div class="checklist">
+      ${l.services.map((s,i)=>`
+        <div class="chk">
+          <div class="chk-box ${s.status}" onclick="toggleStatus(${i})">${s.status==='done'?'✓':(s.status==='progress'?'•':'')}</div>
+          <div class="chk-body"><b>${s.name}</b><p>${s.note}</p></div>
+          <div class="chk-tag ${s.status}">${s.status==='done'?'Completado':s.status==='progress'?'En proceso':'Pendiente'}</div>
+        </div>`).join('')}
+    </div>
+    <div class="actrow">
+      <button class="btn" onclick="notify('Recordatorio enviado a ${l.name.split(' ')[0]} por SMS y correo.')">Enviar recordatorio</button>
+      <button class="btn ghost" onclick="notify('${l.name.split(' ')[0]} fue notificado a ${l.realtor.split(' — ')[0]}.')">Notificar al Realtor</button>
+    </div>`;
+}
+function selectLead(id){ activeId=id; renderList(); renderMain(); }
+function toggleStatus(i){
+  const l = leads.find(x=>x.id===activeId);
+  const order = {pending:'progress', progress:'done', done:'pending'};
+  l.services[i].status = order[l.services[i].status];
+  l.score = Math.round(l.services.filter(s=>s.status==='done').length / l.services.length * 100);
+  renderList(); renderMain();
+}
+function notify(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+renderList(); renderMain();
+
+document.querySelectorAll('[data-view]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const v = btn.getAttribute('data-view');
+    document.querySelectorAll('.tab[data-view]').forEach(t=>t.classList.toggle('active', t.getAttribute('data-view')===v));
+    document.getElementById('view-landing').classList.toggle('active', v==='landing');
+    document.getElementById('view-dashboard').classList.toggle('active', v==='dashboard');
+    window.scrollTo(0,0);
+  });
+});
+</script>
+</body>
+</html>
